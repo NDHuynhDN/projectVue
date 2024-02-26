@@ -12,7 +12,7 @@ export interface User {
   address: string
   phone: string
   gender: string
-  room_id?: number | string
+  room_id?: number 
   password?: string
 }
 export interface AccountLogin {

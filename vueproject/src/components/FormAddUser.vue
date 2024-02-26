@@ -80,35 +80,31 @@ const formData = ref<User>({
   address: '',
   phone: '',
   gender: '',
-  room_id: ''
+  room_id: 0
 })
 // validate
 const inputUserNameError = ref<string>('')
 
 const validateUsername = () => {
   inputUserNameError.value =
-    formData.value.username.length >= 4 ? '' : 'At least 4 characters and is required'
+    formData.value.username.length >= 2 ? '' : 'At least 2 characters and is required'
 }
+
 // save
-const saveInforAdd = () => {
+const saveInforAdd = async () => {
   try {
     validateUsername()
     if (!inputUserNameError.value) {
-      useApiUser.addUser(formData.value)
+      await useApiUser.addUser(formData.value)
+      const roomId = formData.value.room_id
+      const room = await useApiRoom.fetchRoomById(roomId)
+      if (room) {
+        room.count += 1
+        room.status = 1
+      }
+      useApiRoom.updateRoom(room)
       alert('Add successfully !!!')
       router.push('/user')
-      const update = useApiRoom.rooms.find((room) => {
-        room.id === formData.value.room_id
-      })
-      // update.count += 1
-      // update?.status = 1
-
-      // if (roomIndex !== -1) {
-      //   // Tăng count lên 1
-      //   useApiRoom.rooms.
-      //   // Đặt status là có người (1)
-      //   rooms.value[roomIndex].status = 1
-      // }
     } else {
       console.log('Form has errors. Please fix them.')
     }

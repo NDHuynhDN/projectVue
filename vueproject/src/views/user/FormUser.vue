@@ -23,17 +23,15 @@ import type { User } from '@/types'
 import { ref, watch } from 'vue'
 
 export default {
-  props: ['infor', 'editing'],
-  setup(props, { emit }) {
+  props: ['infor'],
+  setup(props: { infor: User }, { emit }) {
     const tempData = ref<User>({ ...props.infor })
 
     // Watch for changes in 'infor' prop and update 'tempData' accordingly
     watch(
       () => props.infor,
       () => {
-        if (!props.editing) {
-          tempData.value = { ...props.infor }
-        }
+        tempData.value = { ...props.infor }
       }
     )
 

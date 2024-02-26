@@ -48,7 +48,6 @@
       <p v-else class="">No result</p>
     </table>
   </div>
-
   <router-view></router-view>
 </template>
 <script setup lang="ts">
@@ -56,7 +55,6 @@ import { onMounted, ref, watch } from 'vue'
 import type { User } from '@/types'
 import { useRouter } from 'vue-router'
 import { useApiUserStore } from '@/stores/storeUser'
-
 
 const router = useRouter()
 
@@ -110,19 +108,5 @@ watch(inputSearch, (newValue) => {
     )
   }
 })
-
-// const selectedCountry = ref<string>('')
-
-// const arrayCountry: Array<string> = ['Việt Nam', 'England', 'Canada']
-
-// const arrayFilter = ref<User[]>([])
-// const filterUser = async (): Promise<any> => {
-//   try {
-//     const res = await axios.get(`http://localhost:3000/users?address=${selectedCountry.value}`)
-//     arrayFilter.value = res.data
-//   } catch (error) {
-//     console.error('Error fetching user data:', error)
-//   }
-// }
 </script>
 <style></style>

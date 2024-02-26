@@ -29,6 +29,7 @@
       v-model="formData.address"
     />
     <!-- <label for="">Identify code: </label> -->
+    <button class="bg-login m-2 rounded-second px-3 py-2">Add room</button>
   </form>
 </template>
 <script lang="ts" setup>

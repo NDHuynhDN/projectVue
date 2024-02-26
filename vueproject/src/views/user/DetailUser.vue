@@ -12,15 +12,9 @@
       <div class="">
         <FormUser :infor="inforUser" @saveInfoEdit="saveInfo"></FormUser>
       </div>
-      <!-- <div class="text-center">
-        <div class="border rounded-[100px] w-[100px] h-[100px]"></div>
-      </div> -->
     </div>
     <div class="flex justify-end">
       <button class="bg-red m-2 p-2 rounded-second" @click="cancelEdit">Cancel</button>
-      <!-- <button v-if="!editing" class="bg-signup m-2 p-2 rounded-second" @click="startEdit">
-        Edit
-      </button> -->
       <button class="bg-signup m-2 p-2 rounded-second" @click="saveInfo(inforUser)">Save</button>
     </div>
   </div>
@@ -60,9 +54,9 @@ const saveInfo = async (infor: User) => {
   try {
     await axios.put(`http://localhost:3000/users/${route.params.id}`, infor).then(async () => {
       alert('Edit Succesful !!!')
+      router.push('/user')
       const res = await axios.get(`http://localhost:3000/users`)
       inforUser.value = res.data
-      router.push('/user')
     })
 
     // inforUser.value = { ...infor }

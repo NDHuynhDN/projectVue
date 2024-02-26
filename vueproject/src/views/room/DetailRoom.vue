@@ -2,17 +2,27 @@
   <div class="text-center h-[500px]">
     <div class="flex justify-between items-center">
       <div v-if="roomData" class="ml-3 font-thin">
-        Room: {{ roomData.name }} - Status:
-        {{
-          roomData.status === 1
-            ? 'Phòng đang được thuê'
-            : roomData.status === 2
-              ? 'Phòng còn trống'
-              : roomData.status === 3
-                ? 'Phòng đang sửa chữa'
-                : ''
-        }}
-        - Số lượng người: {{ roomData.count }}
+        Room:
+        <code class="font-bold text-[30px]">
+          {{ roomData.name }}
+        </code>
+        - Status:
+        <code class="font-bold text-[30px]">
+          {{
+            roomData.status === 1
+              ? 'có người ở'
+              : roomData.status === 2
+                ? 'phòng trống'
+                : roomData.status === 3
+                  ? 'đang sửa'
+                  : ''
+          }}
+        </code>
+
+        - Số lượng người:
+        <code class="font-bold text-[30px]">
+          {{ roomData.count }}
+        </code>
       </div>
       <button
         class="rounded-primary bg-login px-5 py-2 w-[100px] m-4"
@@ -22,13 +32,16 @@
       </button>
     </div>
 
-    <div class="">
-      <table v-if="userInRoom" class="w-[500px]">
-        <thead class="">
+    <div class="text-center">
+      <h2 class="font-semnibold text-[30px]">User in Room</h2>
+      <table v-if="userInRoom" class="w-[700px] mx-auto">
+        <thead class="bg-login font-bold">
           <tr class="">
-            <th class="border">id</th>
-            <th class="border">Tên</th>
-            <th class="border">Giới tính</th>
+            <th class="border">Id</th>
+            <th class="border">Name</th>
+            <th class="border">Gender</th>
+            <th class="border">Address</th>
+            <th class="border">Phone</th>
           </tr>
         </thead>
         <tbody>
@@ -36,10 +49,12 @@
             <td class="border px-3 py-1">{{ userInfo.id }}</td>
             <td class="border px-3 py-1">{{ userInfo.name }}</td>
             <td class="border px-3 py-1">{{ userInfo.gender }}</td>
-            <td class="flex gap-2 items-center justify-center">
+            <td class="border px-3 py-1">{{ userInfo.address }}</td>
+            <td class="border px-3 py-1">{{ userInfo.phone }}</td>
+            <!-- <td class="flex gap-2 items-center justify-center">
               <button>Xóa</button>
               <button>Sửa</button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -92,8 +107,20 @@ const fetchUserInRoom = (roomId: number | string | string[]) => {
   }
 }
 onMounted(() => {
-  fetchEachRoom()
   fetchUserInRoom(route.params.id)
+  fetchEachRoom()
 })
 </script>
 <style scoped></style>
+
+<!-- <code class="font-bold text-[30px]">
+  {{
+    roomData.status === 1
+      ? 'Phòng đang được thuê'
+      : roomData.status === 2
+        ? 'Phòng còn trống'
+        : roomData.status === 3
+          ? 'Phòng đang sửa chữa'
+          : ''
+  }}
+</code> -->

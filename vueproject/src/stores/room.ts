@@ -17,8 +17,22 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
+  const updateRoomStatus = (roomId: number | undefined, newStatus: number): void => {
+    const roomIndex = rooms.value.findIndex((room) => room.id === roomId)
+    if (roomIndex !== -1) {
+      rooms.value[roomIndex].status = newStatus
+      
+    }
+  }
+  const updateRoom = (updatedRoom: Room): void => {
+    const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id);
+    if (roomIndex !== -1) {
+      rooms.value[roomIndex] = { ...updatedRoom };
+    }
+  };
+
   const room = ref<Room[]>([])
-  const fetchRoomById = async (id: number | string | string[]): Promise<any> => {
+  const fetchRoomById = async (id: number | string | string[] | undefined): Promise<any> => {
     try {
       const res = await axios.get(`http://localhost:3000/rooms/${id}`)
       return res.data
@@ -27,5 +41,5 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  return { fetchRoom, fetchRoomById, rooms, room }
+  return { fetchRoom, fetchRoomById, rooms, room, updateRoomStatus, updateRoom }
 })

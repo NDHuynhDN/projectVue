@@ -14,37 +14,37 @@
               >
                 <span class="text-[30px]"
                   >ID:
-                  <code class="text-[24px] block border-b-2">
+                  <code class="text-[24px] block border-whitereal border-b-2">
                     {{ account.id }}
                   </code>
                 </span>
                 <span class="text-[30px]"
                   >Name:
-                  <code class="text-[24px] block border-b-2">
+                  <code class="text-[24px] block border-whitereal border-b-2">
                     {{ account.name }}
                   </code>
                 </span>
                 <span class="text-[30px]"
                   >Gender:
-                  <code class="text-[24px] block border-b-2">
+                  <code class="text-[24px] block border-whitereal border-b-2">
                     {{ account.gender }}
                   </code>
                 </span>
                 <span class="text-[30px]"
                   >Identify code:
-                  <code class="text-[24px] block border-b-2">
+                  <code class="text-[24px] block border-whitereal border-b-2">
                     {{ account.identify }}
                   </code>
                 </span>
                 <span class="text-[30px]"
                   >Address:
-                  <code class="text-[24px] block border-b-2">
+                  <code class="text-[24px] block border-whitereal border-b-2">
                     {{ account.address }}
                   </code>
                 </span>
                 <span class="text-[30px]"
                   >Phone:
-                  <code class="text-[24px] block border-b-2">
+                  <code class="text-[24px] block border-whitereal border-b-2">
                     {{ account.phone }}
                   </code>
                 </span>
