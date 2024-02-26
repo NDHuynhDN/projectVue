@@ -25,7 +25,7 @@
     {
       "id": 3,
       "name": "Bendavit",
-      "username": "dsvisnet",
+      "username": "dsvisne",
       "identify": "901253412341",
       "address": "Englands",
       "phone": "93543511656",
@@ -36,18 +36,18 @@
     {
       "id": 4,
       "name": "HuynhDua",
-      "username": "dsvisnet",
+      "username": "huyne",
       "identify": "901253412341",
       "address": "Việt Nam",
       "phone": "93543511656",
       "gender": "male",
       "room_id": "104s",
-      "password": "123456"
+      "password": "1"
     },
     {
       "id": 5,
       "name": "Kaka",
-      "username": "dsvisnet",
+      "username": "kkka",
       "identify": "901253412341",
       "address": "England",
       "phone": "93543511656",
@@ -58,7 +58,7 @@
     {
       "id": 6,
       "name": "Mount",
-      "username": "dsvist1",
+      "username": "mrMou",
       "identify": "901253412341",
       "address": "England",
       "phone": "93543511656",
@@ -69,7 +69,7 @@
     {
       "id": 7,
       "name": "Anna",
-      "username": "dsvisnet",
+      "username": "aannaa",
       "identify": "901253412341",
       "address": "England",
       "phone": "93543511656",
@@ -85,6 +85,7 @@
       "address": "China",
       "phone": "0123456789",
       "gender": "male",
+      "password": "1"
       "room_id": "104"
     },
     {
