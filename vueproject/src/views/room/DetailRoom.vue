@@ -76,24 +76,9 @@ const useApiUser = useApiUserStore()
 
 const route = useRoute()
 
-const roomData = ref<Room>()
-
-const fetchEachRoom = async () => {
-  try {
-    const res = await useApiRoom.fetchRoomById(route.params.id)
-    if (res) {
-      roomData.value = res
-    } else {
-      console.log('error')
-    }
-  } catch (error) {
-    console.log('Error', error)
-  }
-}
-
 const userInRoom = ref<User[]>([])
-const fetchUserInRoom = (roomId: number | string | string[]) => {
-  useApiUser.fetchDataUser2()
+const fetchUserInRoom = async (roomId: number | string | string[]) => {
+  await useApiUser.fetchDataUser2()
   if (useApiUser.userData) {
     const userInThisRoom = useApiUser.userData.filter((u) => u.room_id == roomId)
     if (userInThisRoom.length > 0) {
@@ -104,6 +89,19 @@ const fetchUserInRoom = (roomId: number | string | string[]) => {
     // }
   } else {
     console.log('Lỗi')
+  }
+}
+const roomData = ref<Room>()
+const fetchEachRoom = async () => {
+  try {
+    const res = await useApiRoom.fetchRoomById(route.params.id)
+    if (res) {
+      roomData.value = res
+    } else {
+      console.log('error')
+    }
+  } catch (error) {
+    console.log('Error', error)
   }
 }
 onMounted(() => {

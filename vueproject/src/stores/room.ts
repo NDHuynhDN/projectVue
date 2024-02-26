@@ -17,17 +17,11 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  const updateRoomStatus = (roomId: number | undefined, newStatus: number): void => {
-    const roomIndex = rooms.value.findIndex((room) => room.id === roomId)
-    if (roomIndex !== -1) {
-      rooms.value[roomIndex].status = newStatus
-      
-    }
-  }
-  const updateRoom = (updatedRoom: Room): void => {
+  const updateRoomStatus = (updatedRoom: Room): void => {
     const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id);
     if (roomIndex !== -1) {
       rooms.value[roomIndex] = { ...updatedRoom };
+      console.log(updatedRoom)
     }
   };
 
@@ -41,5 +35,5 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  return { fetchRoom, fetchRoomById, rooms, room, updateRoomStatus, updateRoom }
+  return { fetchRoom, fetchRoomById, rooms, room, updateRoomStatus }
 })

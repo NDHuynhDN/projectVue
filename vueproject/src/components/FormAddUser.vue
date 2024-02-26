@@ -98,11 +98,11 @@ const saveInforAdd = async () => {
       await useApiUser.addUser(formData.value)
       const roomId = formData.value.room_id
       const room = await useApiRoom.fetchRoomById(roomId)
-      if (room) {
+      if (room && room.status === 2) {
         room.count += 1
         room.status = 1
+        useApiRoom.updateRoomStatus(room)
       }
-      useApiRoom.updateRoom(room)
       alert('Add successfully !!!')
       router.push('/user')
     } else {
