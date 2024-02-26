@@ -1,0 +1,119 @@
+<template>
+  <form class="flex flex-col gap-3 w-[600px] mx-auto" @submit.prevent="saveInforAdd">
+    <h1 class="text-center text-[40px] font-bold">Add new user</h1>
+    <input
+      type="text"
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      placeholder="Enter name . . ."
+      v-model="formData.name"
+    />
+    <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
+    <input
+      type="text"
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      placeholder="Enter username . . ."
+      v-model="formData.username"
+    />
+    <span v-if="inputUserNameError" class="text-red">{{ inputUserNameError }}</span>
+
+    <input
+      type="text"
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      placeholder="Enter gender (male or female) . . ."
+      v-model="formData.gender"
+    />
+    <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
+
+    <input
+      type="text"
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      placeholder="Enter address . . ."
+      v-model="formData.address"
+    />
+    <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
+
+    <input
+      type="text"
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      placeholder="Enter identify code . . . "
+      v-model="formData.identify"
+    />
+    <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
+
+    <input
+      type="text"
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      placeholder="Enter phone . . ."
+      v-model="formData.phone"
+    />
+    <select
+      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      v-model="formData.room_id"
+    >
+      <option value="" selected disabled hidden>Choose room</option>
+      <option v-for="room in useApiRoom.rooms" :value="room.id" :key="room.id">
+        {{ room.name }}
+      </option>
+    </select>
+    <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
+
+    <button class="m-2 px-3 py-2 bg-login rounded-second">Add new user</button>
+  </form>
+</template>
+<script lang="ts" setup>
+import { useRoomStore } from '@/stores/room'
+import { useApiUserStore } from '@/stores/storeUser'
+import type { User } from '@/types'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+// use Store
+const useApiUser = useApiUserStore()
+const useApiRoom = useRoomStore()
+// v-modal input
+const formData = ref<User>({
+  id: 0,
+  name: '',
+  username: '',
+  identify: '',
+  address: '',
+  phone: '',
+  gender: '',
+  room_id: ''
+})
+// validate
+const inputUserNameError = ref<string>('')
+
+const validateUsername = () => {
+  inputUserNameError.value =
+    formData.value.username.length >= 4 ? '' : 'At least 4 characters and is required'
+}
+// save
+const saveInforAdd = () => {
+  try {
+    validateUsername()
+    if (!inputUserNameError.value) {
+      useApiUser.addUser(formData.value)
+      alert('Add successfully !!!')
+      router.push('/user')
+      const update = useApiRoom.rooms.find((room) => {
+        room.id === formData.value.room_id
+      })
+      // update.count += 1
+      // update?.status = 1
+
+      // if (roomIndex !== -1) {
+      //   // Tăng count lên 1
+      //   useApiRoom.rooms.
+      //   // Đặt status là có người (1)
+      //   rooms.value[roomIndex].status = 1
+      // }
+    } else {
+      console.log('Form has errors. Please fix them.')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+</script>

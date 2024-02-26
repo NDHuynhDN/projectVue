@@ -1,0 +1,68 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Các styles của bạn ở đây */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+input,
+select,
+textarea {
+  background-color: transparent;
+  outline: none;
+}
+button {
+  cursor: pointer;
+  background-color: transparent;
+  /* outline: none; */
+  /* border: 0; */
+}
+body {
+  background-color: rgb(243, 243, 243);
+  @apply text-primary
+}
+
+.btn-1 {
+  background-image: linear-gradient(to right, #feac5e 0%, #cca3499a 90%, #c58e5a 100%);
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+}
+.btn-1:hover {
+  background-position: bottom; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-2 {
+  background-image: linear-gradient(to right, #6fbbc7 0%, #566b759a 90%, #779c9a 100%);
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+}
+.btn-2:hover {
+  background-position: bottom; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
