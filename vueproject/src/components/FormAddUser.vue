@@ -64,7 +64,7 @@
 import { useRoomStore } from '@/stores/room'
 import { useApiUserStore } from '@/stores/storeUser'
 import type { User } from '@/types'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -82,6 +82,11 @@ const formData = ref<User>({
   gender: '',
   room_id: 0
 })
+
+onMounted(() => {
+  useApiRoom.fetchRoom()
+})
+
 // validate
 const inputUserNameError = ref<string>('')
 
@@ -96,12 +101,17 @@ const saveInforAdd = async () => {
     validateUsername()
     if (!inputUserNameError.value) {
       await useApiUser.addUser(formData.value)
+      
       const roomId = formData.value.room_id
       const room = await useApiRoom.fetchRoomById(roomId)
       if (room && room.status === 2) {
         room.count += 1
         room.status = 1
+        
         useApiRoom.updateRoomStatus(room)
+
+
+        // await useApiRoom.fetchRoom()
       }
       alert('Add successfully !!!')
       router.push('/user')

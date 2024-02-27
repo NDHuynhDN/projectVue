@@ -57,7 +57,11 @@ onMounted(() => {
   }
 })
 
-// ------------------------------------------------------
+// onMounted(async () => {
+//   await useApiRoom.fetchRoom()
+// })
+
+// --------------------------------------------
 const getColorByStatus = (status: number) => {
   if (status === 1) {
     return 'red'
@@ -68,7 +72,7 @@ const getColorByStatus = (status: number) => {
   }
 }
 
-// ------------------------------------------------------
+// --------------------------------------------
 const roomUse = ref<boolean>(false)
 const roomEmpty = ref<boolean>(false)
 const roomRepair = ref<boolean>(false)

@@ -18,12 +18,18 @@ export const useRoomStore = defineStore('room', () => {
   }
 
   const updateRoomStatus = (updatedRoom: Room): void => {
-    const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id);
+    const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id)
     if (roomIndex !== -1) {
-      rooms.value[roomIndex] = { ...updatedRoom };
+      rooms.value[roomIndex] = updatedRoom
+      console.log(rooms.value[roomIndex])
       console.log(updatedRoom)
+      
     }
-  };
+  }
+
+  // const updateRooms = (updatedRooms: Room[]): void => {
+  //   rooms.value = updatedRooms
+  // }
 
   const room = ref<Room[]>([])
   const fetchRoomById = async (id: number | string | string[] | undefined): Promise<any> => {
