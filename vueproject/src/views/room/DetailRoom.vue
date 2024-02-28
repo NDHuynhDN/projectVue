@@ -51,10 +51,6 @@
             <td class="border px-3 py-1">{{ userInfo.gender }}</td>
             <td class="border px-3 py-1">{{ userInfo.address }}</td>
             <td class="border px-3 py-1">{{ userInfo.phone }}</td>
-            <!-- <td class="flex gap-2 items-center justify-center">
-              <button>Xóa</button>
-              <button>Sửa</button>
-            </td> -->
           </tr>
         </tbody>
       </table>
@@ -68,7 +64,6 @@ import { useApiUserStore } from '@/stores/storeUser'
 import type { Room, User } from '@/types'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-// import RoomItem from './RoomItem.vue'
 
 const useApiRoom = useRoomStore()
 
@@ -84,9 +79,7 @@ const fetchUserInRoom = async (roomId: number | string | string[]) => {
     if (userInThisRoom.length > 0) {
       userInRoom.value = userInThisRoom
     }
-    // else {
-    //   alert('Phòng này chưa có người')
-    // }
+    
   } else {
     console.log('Lỗi')
   }
@@ -111,14 +104,3 @@ onMounted(() => {
 </script>
 <style scoped></style>
 
-<!-- <code class="font-bold text-[30px]">
-  {{
-    roomData.status === 1
-      ? 'Phòng đang được thuê'
-      : roomData.status === 2
-        ? 'Phòng còn trống'
-        : roomData.status === 3
-          ? 'Phòng đang sửa chữa'
-          : ''
-  }}
-</code> -->

@@ -100,21 +100,25 @@ const saveInforAdd = async () => {
   try {
     validateUsername()
     if (!inputUserNameError.value) {
-      await useApiUser.addUser(formData.value)
-      
       const roomId = formData.value.room_id
       const room = await useApiRoom.fetchRoomById(roomId)
+
       if (room && room.status === 2) {
+        await useApiUser.addUser(formData.value)
         room.count += 1
         room.status = 1
-        
         useApiRoom.updateRoomStatus(room)
-
-
-        // await useApiRoom.fetchRoom()
+        alert('Add successfully !!!')
+        router.push('/user')
+      } else if (room && room.status === 3) {
+        alert('Dont add this room')
+      } else {
+        await useApiUser.addUser(formData.value)
+        room.count += 1
+        useApiRoom.updateRoomStatus(room)
+        alert('Add successfully !!!')
+        router.push('/user')
       }
-      alert('Add successfully !!!')
-      router.push('/user')
     } else {
       console.log('Form has errors. Please fix them.')
     }

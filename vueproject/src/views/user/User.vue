@@ -12,8 +12,8 @@
         class="rounded-circle w-[40px] h-[52px]"
       />
     </button>
-
     <UseList></UseList>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 <script lang="ts" setup>

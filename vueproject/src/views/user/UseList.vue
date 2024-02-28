@@ -33,13 +33,13 @@
                 class="rounded-primary bg-red py-1 px-3"
                 @click="deleteUser(user.id, user.name)"
               >
-                Xoa
+                Delete
               </button>
               <button
                 class="rounded-primary bg-green py-1 px-3"
                 @click="router.push(`/user/${user.id}`)"
               >
-                Chi tiết
+                Detail
               </button>
             </div>
           </td>
@@ -48,7 +48,7 @@
       <p v-else class="">No result</p>
     </table>
   </div>
-  <router-view></router-view>
+  <router-view ></router-view>
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
