@@ -5,46 +5,52 @@
       type="text"
       class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
       placeholder="Enter id . . ."
-      v-model="formData.name"
+      v-model="formData.id"
     />
     <!-- <label for="" class="flex-1">Username: </label> -->
     <input
       type="text"
       class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
       placeholder="Enter name . . ."
-      v-model="formData.username"
+      v-model="formData.name"
     />
     <!-- <label for="">Gender: </label> -->
     <input
       type="text"
       class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
       placeholder="Enter number . . ."
-      v-model="formData.gender"
+      v-model="formData.count"
     />
     <!-- <label for="">Address: </label> -->
     <input
       type="text"
       class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
       placeholder="Enter status . . ."
-      v-model="formData.address"
+      v-model="formData.status"
     />
+
     <!-- <label for="">Identify code: </label> -->
     <button class="bg-login m-2 rounded-second px-3 py-2">Add room</button>
   </form>
 </template>
 <script lang="ts" setup>
-import type { User } from '@/types'
+import router from '@/router'
+import { useRoomStore } from '@/stores/room'
+import type { Room, User } from '@/types'
 import { reactive } from 'vue'
 
-const formData = reactive<User>({
-  id: 1,
+const useApiRoom = useRoomStore()
+
+const formData = reactive<Room>({
+  id: 601,
   name: '',
-  username: '',
-  identify: '',
-  address: '',
-  phone: '',
-  gender: ''
+  count: 0,
+  status: 2
 })
 
-const saveInfoAdd = async () => {}
+const saveInfoAdd = async () => {
+  await useApiRoom.addRoom(formData)
+  alert('add successful!!')
+  // router.push('/room')
+}
 </script>

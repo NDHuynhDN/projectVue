@@ -36,5 +36,14 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  return { fetchRoom, fetchRoomById, rooms, room, updateRoomStatus }
+  const addRoom = async (dataRoom: Room): Promise<any> => {
+    try {
+      const res = await axios.post('http://localhost:3000/rooms', dataRoom)
+      return res.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { fetchRoom, fetchRoomById, rooms, room, updateRoomStatus, addRoom }
 })
