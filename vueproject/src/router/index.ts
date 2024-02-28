@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/user/addUser',
         name: 'addUser',
-        component: () => import('../components/FormAddUser.vue')
+        component: () => import('../views/user/FormAddUser.vue')
       },
       {
         path: '/profile',

@@ -18,32 +18,25 @@
   </form>
 </template>
 <style></style>
-<script lang="ts">
+<script lang="ts" setup>
 import type { User } from '@/types'
-import { ref, watch } from 'vue'
+import { ref, watch, defineProps, defineEmits } from 'vue'
 
-export default {
-  props: ['infor'],
-  setup(props: { infor: User }, { emit }) {
-    const tempData = ref<User>({ ...props.infor })
+const props = defineProps(['infor'])
+const emit = defineEmits<{
+  (event: 'saveInfoEdit', payload: User): void
+}>()
+const tempData = ref<User>({ ...props.infor })
 
-    // Watch for changes in 'infor' prop and update 'tempData' accordingly
-    watch(
-      () => props.infor,
-      () => {
-        tempData.value = { ...props.infor }
-      }
-    )
-
-    const saveAll = (formData: User) => {
-      emit('saveInfoEdit', formData)
-    }
-
-    return {
-      tempData,
-      saveAll
-    }
+// Watch for changes in 'infor' prop and update 'tempData' accordingly
+watch(
+  () => props.infor,
+  () => {
+    tempData.value = { ...props.infor }
   }
+)
+
+const saveAll = (formData: User) => {
+  emit('saveInfoEdit', formData)
 }
-// defineProps<{ infor: User }>()
 </script>

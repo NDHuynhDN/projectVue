@@ -36,7 +36,7 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  const addRoom = async (dataRoom: Room): Promise<any> => {
+  const addRoom = async (dataRoom: Room): Promise<void> => {
     try {
       const res = await axios.post('http://localhost:3000/rooms', dataRoom)
       return res.data

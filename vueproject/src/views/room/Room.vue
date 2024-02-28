@@ -15,7 +15,7 @@
       class="rounded-circle w-[38px] h-[40px]"
     />
   </button>
-  <Modal v-if="isShow" @cancel="onToggle" title="Add new room" textbtn="Add User">
+  <Modal v-if="isShow" @cancel="onToggle" title="Add new room">
     <template v-slot:body>
       <AddRoom></AddRoom>
     </template>
