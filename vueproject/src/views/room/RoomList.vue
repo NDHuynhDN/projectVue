@@ -2,9 +2,7 @@
   <div class="mx-auto w-[1000px] h-[622px] rounded-second p-2 text-white relative">
     <div class="flex justify-around items-center">
       <label class="text-red"> <input type="checkbox" v-model="roomUse" /> Room has user </label>
-      <label class="text-green">
-        <input type="checkbox" v-model="roomEmpty" /> Room Empty
-      </label>
+      <label class="text-green"> <input type="checkbox" v-model="roomEmpty" /> Room Empty </label>
       <label class="text-yellow">
         <input type="checkbox" v-model="roomRepair" /> Room Repair
       </label>
@@ -40,6 +38,7 @@
 import Skeleton from '@/components/Skeleton.vue'
 import router from '@/router'
 import { useRoomStore } from '@/stores/room'
+import type { Room } from '@/types'
 
 const mang = Array.from({ length: 20 }, (_, index) => index + 1)
 
@@ -50,11 +49,13 @@ const useApiRoom = useRoomStore()
 
 onMounted(() => {
   try {
-    setTimeout(() => useApiRoom.fetchRoom(), 1000)
+    setTimeout(() => useApiRoom.fetchRoom(), 2000)
   } catch (error) {
     console.log('Error', error)
   }
 })
+
+const dataRoom = ref<Room[]>([])
 
 // --------------------------------------------
 const getColorByStatus = (status: number) => {

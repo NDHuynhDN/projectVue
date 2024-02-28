@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { Room } from '@/types'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export const useRoomStore = defineStore('room', () => {
   const rooms = ref<Room[]>([])
@@ -23,13 +23,8 @@ export const useRoomStore = defineStore('room', () => {
       rooms.value[roomIndex] = updatedRoom
       console.log(rooms.value[roomIndex])
       console.log(updatedRoom)
-      
     }
   }
-
-  // const updateRooms = (updatedRooms: Room[]): void => {
-  //   rooms.value = updatedRooms
-  // }
 
   const room = ref<Room[]>([])
   const fetchRoomById = async (id: number | string | string[] | undefined): Promise<any> => {

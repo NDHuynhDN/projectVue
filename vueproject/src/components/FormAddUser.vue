@@ -64,7 +64,7 @@
 import { useRoomStore } from '@/stores/room'
 import { useApiUserStore } from '@/stores/storeUser'
 import type { User } from '@/types'
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -72,7 +72,7 @@ const router = useRouter()
 const useApiUser = useApiUserStore()
 const useApiRoom = useRoomStore()
 // v-modal input
-const formData = ref<User>({
+const formData = reactive<User>({
   id: 0,
   name: '',
   username: '',
@@ -92,7 +92,7 @@ const inputUserNameError = ref<string>('')
 
 const validateUsername = () => {
   inputUserNameError.value =
-    formData.value.username.length >= 2 ? '' : 'At least 2 characters and is required'
+    formData.username.length >= 2 ? '' : 'At least 2 characters and is required'
 }
 
 // save
@@ -100,20 +100,20 @@ const saveInforAdd = async () => {
   try {
     validateUsername()
     if (!inputUserNameError.value) {
-      const roomId = formData.value.room_id
+      const roomId = formData.room_id
       const room = await useApiRoom.fetchRoomById(roomId)
 
       if (room && room.status === 2) {
-        await useApiUser.addUser(formData.value)
+        await useApiUser.addUser(formData)
         room.count += 1
         room.status = 1
         useApiRoom.updateRoomStatus(room)
         alert('Add successfully !!!')
         router.push('/user')
       } else if (room && room.status === 3) {
-        alert('Dont add this room')
+        alert('Dont add repair room')
       } else {
-        await useApiUser.addUser(formData.value)
+        await useApiUser.addUser(formData)
         room.count += 1
         useApiRoom.updateRoomStatus(room)
         alert('Add successfully !!!')
