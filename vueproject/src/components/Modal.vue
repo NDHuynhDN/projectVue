@@ -27,7 +27,7 @@ import { defineEmits } from 'vue'
 
 const props = defineProps<{
   title: string
-  content: string
+  // content: string
 }>()
 
 const emit = defineEmits<{

@@ -17,7 +17,7 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  const updateRoomStatus = (updatedRoom: Room): void => {
+  const updateRoomStatus = (updatedRoom: Room): any => {
     const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id)
     if (roomIndex !== -1) {
       rooms.value[roomIndex] = updatedRoom
@@ -36,7 +36,7 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  const addRoom = async (dataRoom: Room): Promise<void> => {
+  const addRoom = async (dataRoom: Room): Promise<Room | undefined> => {
     try {
       const res = await axios.post('http://localhost:3000/rooms', dataRoom)
       return res.data

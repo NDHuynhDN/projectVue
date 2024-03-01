@@ -28,7 +28,7 @@ export const useApiUserStore = defineStore('apiUser', () => {
     }
   }
 
-  const delDataUser = async (userId: number): Promise<any> => {
+  const delDataUser = async (userId: number): Promise<User | undefined> => {
     try {
       const res = await axios.delete(`http://localhost:3000/users/${userId}`)
       return res.data
@@ -36,7 +36,7 @@ export const useApiUserStore = defineStore('apiUser', () => {
       console.log('Error', error)
     }
   }
-  const getUserById = async (id: number | string | string[]): Promise<void> => {
+  const getUserById = async (id: number | string | string[]): Promise<User | undefined> => {
     try {
       const res = await axios.get(`http://localhost:3000/users/${id}`)
       return res.data
@@ -44,7 +44,7 @@ export const useApiUserStore = defineStore('apiUser', () => {
       console.error('Error adding data:', error)
     }
   }
-  const addUser = async (formData: User): Promise<void> => {
+  const addUser = async (formData: User): Promise<User | undefined> => {
     try {
       const res = await axios.post('http://localhost:3000/users', formData)
       return res.data
@@ -53,7 +53,6 @@ export const useApiUserStore = defineStore('apiUser', () => {
     }
   }
   return {
-    // status,
     fetchDataUser,
     fetchDataUser2,
     getUserById,

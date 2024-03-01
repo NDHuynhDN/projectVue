@@ -16,12 +16,13 @@ export const useAuthStore = defineStore('user', () => {
     }
   }
 
-  const createAccount = async (account: AccountSignUp) => {
+  const createAccount = async (account: AccountSignUp): Promise<AccountSignUp | undefined> => {
     try {
       const res = await axios.post('http://localhost:3000/users', account)
       return res.data
     } catch (error) {
       console.log(error)
+      return undefined
     }
   }
 

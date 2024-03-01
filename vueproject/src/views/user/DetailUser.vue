@@ -26,13 +26,10 @@ import type { User } from '@/types'
 import { ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import { useApiUserStore } from '@/stores/storeUser'
 
 const route = useRoute()
 
 const router = useRouter()
-
-const useApiUser = useApiUserStore()
 
 const inforUser = ref<User>()
 
