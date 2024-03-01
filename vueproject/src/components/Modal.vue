@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="modal-body">
-          <h2 class="text-center font-bold text-[36px] mb-2">{{ title }}</h2>
+          <h2 class="text-center font-bold text-[36px] mb-2">{{ props.title }}</h2>
           <slot name="body"></slot>
         </div>
         <div class="modal-footer"></div>
@@ -25,11 +25,13 @@
 <script lang="ts" setup>
 import { defineEmits } from 'vue'
 
-defineProps(['title', 'content', 'textbtn'])
+const props = defineProps<{
+  title: string
+  content: string
+}>()
 
 const emit = defineEmits<{
   (event: 'cancel'): void
-  // (event: 'submit', payload: any): void
 }>()
 
 const onCloseModal = () => {

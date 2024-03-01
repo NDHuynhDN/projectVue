@@ -73,7 +73,7 @@ const roomUse = ref<boolean>(false)
 const roomEmpty = ref<boolean>(false)
 const roomRepair = ref<boolean>(false)
 
-const filteredPhongs = computed(() => {
+const filteredPhongs = computed<Room[]>(() => {
   if (!roomUse.value && !roomEmpty.value && !roomRepair.value) {
     return useApiRoom.rooms
   } else if (roomUse.value) {
