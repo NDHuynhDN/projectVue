@@ -27,7 +27,6 @@
 <script setup lang="ts">
 import router from '@/router'
 import { useAuthStore } from '@/stores/auth'
-import { onMounted } from 'vue'
 const useAPIAccount = useAuthStore()
 console.log(useAPIAccount.accountUser)
 </script>

@@ -34,9 +34,8 @@
   </form>
 </template>
 <script lang="ts" setup>
-import router from '@/router'
 import { useRoomStore } from '@/stores/room'
-import type { Room, User } from '@/types'
+import type { Room } from '@/types'
 import { reactive } from 'vue'
 
 const useApiRoom = useRoomStore()

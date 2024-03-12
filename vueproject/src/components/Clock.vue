@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="mx-auto text-center bg-login rounded-second w-[200px] shadow-md mt-[30px] flex items-center justify-center gap-2 py-2">
+  <div
+    class="mx-auto text-center bg-login rounded-primary w-[200px] shadow-md mt-[30px] flex items-center justify-center gap-2 py-2"
+  >
     <img src="../assets/image/clock-fill.svg" alt="" class="text-lg text-white w-5 h-5" />
     <code class="text-capitalize text-lg text-white">{{ currentTime }}</code>
   </div>

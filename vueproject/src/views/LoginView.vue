@@ -106,7 +106,4 @@ input[type='checkbox'] {
   width: 20px;
   height: 15px;
 }
-/* .invalid {
-  border: 1px solid red;
-} */
 </style>

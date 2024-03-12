@@ -60,19 +60,18 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useApiUserStore } from '@/stores/storeUser'
 import { onMounted, ref } from 'vue'
 import Modal from '../components/Modal.vue'
 import Header from '@/components/Header.vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useRoomStore } from '@/stores/room'
 
-const useApiUser = useApiUserStore()
 const useAPIAccount = useAuthStore()
 
+const useApiRoom = useRoomStore()
+
 const router = useRouter()
-// const route = useRoute()
-// const user = route.params.username
 
 const isShowModal = ref<boolean>(false)
 

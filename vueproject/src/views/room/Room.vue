@@ -20,15 +20,8 @@
       <AddRoom></AddRoom>
     </template>
   </Modal>
-
-  <div
-    class="wrapper z-10 w-[1200px] h-auto right-[100px] mt-[15px] absolute bg-signup shadow-2xl rounded-primary"
-  >
-    <router-view></router-view>
-  </div>
 </template>
 <script lang="ts" setup>
-import router from '@/router'
 import RoomList from './RoomList.vue'
 import { ref } from 'vue'
 // import AddRoom from './AddRoom.vue'

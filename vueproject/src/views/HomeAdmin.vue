@@ -2,9 +2,9 @@
 <template>
   <div>
     <Header></Header>
-    <div class="flex justify-around">
-      <VerticalNav class="w-[25%]"></VerticalNav>
-      <div class="w-[70%] flex gap-2 m-2 p-2 shadow-xl rounded-second">
+    <div class="flex mx-2 mt-3">
+      <VerticalNav class="mr-1"></VerticalNav>
+      <div class="flex-1 shadow-xl ml-1 p-2 w-full rounded-primary">
         <router-view></router-view>
       </div>
     </div>

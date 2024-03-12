@@ -1,32 +1,47 @@
 <template>
-  <div class="mx-auto w-[1000px] h-[622px] rounded-second p-2 text-white relative">
+  <div class="mx-auto rounded-primary p-2 text-white">
     <div class="flex justify-around items-center">
-      <label class="text-red"> <input type="checkbox" v-model="roomUse" /> Room has user </label>
-      <label class="text-green"> <input type="checkbox" v-model="roomEmpty" /> Room Empty </label>
+      <label class="text-blue">
+        <input type="radio" v-model="roomStatus" value="all" /> All Room
+      </label>
+      <label class="text-red">
+        <input type="radio" v-model="roomStatus" value="hasUser" /> Room Has User
+      </label>
+      <label class="text-green">
+        <input type="radio" v-model="roomStatus" value="empty" /> Room Empty
+      </label>
       <label class="text-yellow">
-        <input type="checkbox" v-model="roomRepair" /> Room Repair
+        <input type="radio" v-model="roomStatus" value="repair" /> Room Repair
       </label>
     </div>
     <div v-if="filteredPhongs.length > 0" class="grid grid-cols-4">
       <div
         v-for="(room, index) in filteredPhongs"
         :key="index"
-        class="h-[110px] m-1 flex justify-center items-center rounded-second hover:opacity-90 hover:cursor-pointer shadow-sm relative"
+        class="m-1 h-[100px] flex justify-center items-center rounded-primary"
         :style="{ backgroundColor: getColorByStatus(room.status) }"
       >
-        <div class="flex justify-center items-center" @click="router.push(`/room/${room.id}`)">
-          <span class="">
-            <code class="font-bold"> Room:</code>
-            {{ room.name }} ({{ room.count }})
-          </span>
+        <div
+          class="w-full h-full flex items-center justify-center hover:cursor-pointer hover:opacity-70"
+          @click="onClickRoom(room.id)"
+        >
+          <code class="font-bold"> Room:</code>
+          {{ room.name }} ({{ room.count }})
         </div>
+        <DetailRoom
+          v-if="selectedRoom && selectedRoom.id === room.id"
+          @cancel="onCancelDetail()"
+          :room="room"
+          :selectedRoomUsers="selectedRoomUsers"
+        ></DetailRoom>
       </div>
     </div>
+
     <div v-else class="grid grid-cols-4">
       <div
         v-for="item in mang"
         :key="item"
-        class="h-[110px] m-1 flex justify-center items-center rounded-second border shadow-sm"
+        class="m-1 h-[100px] flex justify-center items-center rounded-primary border shadow-sm"
       >
         <Skeleton></Skeleton>
       </div>
@@ -36,28 +51,33 @@
 
 <script lang="ts" setup>
 import Skeleton from '@/components/Skeleton.vue'
-import router from '@/router'
 import { useRoomStore } from '@/stores/room'
-import type { Room } from '@/types'
+import DetailRoom from './DetailRoom.vue'
+import type { Room, RoomStatus, User } from '@/types'
 
 const mang = Array.from({ length: 20 }, (_, index) => index + 1)
 
 // import type { Room } from '@/types'
 import { computed, onMounted, ref } from 'vue'
+import { useApiUserStore } from '@/stores/storeUser'
+import axios from 'axios'
 
 const useApiRoom = useRoomStore()
+const useApiUser = useApiUserStore()
 
 onMounted(() => {
   try {
-    setTimeout(() => useApiRoom.fetchRoom(), 2000)
+    setTimeout(async () => {
+      await useApiRoom.fetchRoom()
+      roomStatus.value = 'all'
+      await useApiUser.fetchDataUser2()
+    }, 1000)
   } catch (error) {
     console.log('Error', error)
   }
 })
 
-const dataRoom = ref<Room[]>([])
-
-// --------------------------------------------
+//------------------------------
 const getColorByStatus = (status: number) => {
   if (status === 1) {
     return 'red'
@@ -67,25 +87,40 @@ const getColorByStatus = (status: number) => {
     return 'gold'
   }
 }
-
-// --------------------------------------------
-const roomUse = ref<boolean>(false)
-const roomEmpty = ref<boolean>(false)
-const roomRepair = ref<boolean>(false)
-
+//------------------------------------------
+const roomStatus = ref<RoomStatus>('')
 const filteredPhongs = computed<Room[]>(() => {
-  if (!roomUse.value && !roomEmpty.value && !roomRepair.value) {
+  if (!roomStatus.value) {
     return useApiRoom.rooms
-  } else if (roomUse.value) {
-    return useApiRoom.rooms.filter((phong) => phong.status === 1)
-  } else if (roomEmpty.value) {
-    return useApiRoom.rooms.filter((phong) => phong.status === 2)
-  } else if (roomRepair.value) {
-    return useApiRoom.rooms.filter((phong) => phong.status === 3)
-  } else {
-    return []
   }
+  return useApiRoom.rooms.filter((phong) => {
+    switch (roomStatus.value) {
+      case 'hasUser':
+        return phong.status === 1
+      case 'empty':
+        return phong.status === 2
+      case 'repair':
+        return phong.status === 3
+      case 'all':
+        return useApiRoom.rooms
+      default:
+        return false
+    }
+  })
 })
+
+const selectedRoom = ref<Room | null>(null)
+const selectedRoomUsers = ref<User[]>([])
+
+const onCancelDetail = () => {
+  selectedRoom.value = null
+}
+const onClickRoom = (roomId: number | string) => {
+  selectedRoom.value = useApiRoom.rooms.find((room) => room.id === roomId) || null
+  selectedRoomUsers.value = useApiUser.userData.filter((user) => user.room_id === roomId)
+}
+
+// ---------------------------------
 </script>
 
 <style></style>

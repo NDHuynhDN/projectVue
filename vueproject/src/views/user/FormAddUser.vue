@@ -102,7 +102,7 @@ const saveInforAdd = async () => {
     if (!inputUserNameError.value) {
       const roomId = formData.room_id
       const room = await useApiRoom.fetchRoomById(roomId)
-
+      // update status & count 
       if (room && room.status === 2) {
         await useApiUser.addUser(formData)
         room.count += 1

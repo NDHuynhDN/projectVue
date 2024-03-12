@@ -1,5 +1,3 @@
-// import { WindowsFilled } from '@ant-design/icons'
-// import type { ApiData, ApiState } from '@/types'
 import type { User } from '@/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
@@ -52,6 +50,7 @@ export const useApiUserStore = defineStore('apiUser', () => {
       console.error('Error adding data:', error)
     }
   }
+
   return {
     fetchDataUser,
     fetchDataUser2,

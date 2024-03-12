@@ -1,54 +1,69 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="ml-5">View information about User : {{ route.params.id }}</div>
-
-  <div
-    v-if="inforUser !== undefined"
-    class="bg-login absolute top-[100px] ml-[20px] w-[1100px] rounded-second mx-auto"
-  >
-    <div class="text-center font-bold text-[40px]">
-      View information about User {{ route.params.id }}
-    </div>
-    <div class="flex flex-col ml-2 mr-2">
-      <div class="">
-        <FormUser :infor="inforUser" @saveInfoEdit="saveInfo"></FormUser>
+  <div class="modal fade" @click.self="onClose()">
+    <div class="modal-dialog">
+      <div class="modal-content bg-login">
+        <div class="flex flex-col ml-2 mr-2">
+          <div class="">
+            <p class="font-bold text-center mt-2">Information about user {{ props.user.id }}</p>
+            <form class="flex flex-col">
+              <label class="font-bold" for="">Name: </label>
+              <input type="text" class="border-b-2 border-whitereal" v-model="props.user.name" />
+              <label class="font-bold" for="">Username: </label>
+              <input
+                type="text"
+                class="border-b-2 border-whitereal"
+                v-model="props.user.username"
+              />
+              <label class="font-bold" for="">Gender: </label>
+              <input type="text" class="border-b-2 border-whitereal" v-model="props.user.gender" />
+              <label class="font-bold" for="">Address: </label>
+              <input type="text" class="border-b-2 border-whitereal" v-model="props.user.address" />
+              <label class="font-bold" for="">Identify: </label>
+              <input
+                type="text"
+                class="border-b-2 border-whitereal"
+                v-model="props.user.identify"
+              />
+              <label class="font-bold" for="">Phone: </label>
+              <input type="text" class="border-b-2 border-whitereal" v-model="props.user.phone" />
+              <label class="font-bold" for="">Room_id: </label>
+              <input type="text" class="border-b-2 border-whitereal" v-model="props.user.room_id" />
+            </form>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button class="bg-red m-2 p-2 rounded-second" @click="onClose()">Cancel</button>
+          <button class="bg-signup m-2 p-2 rounded-second" @click="saveAll(user)">Edit</button>
+        </div>
       </div>
-    </div>
-    <div class="flex justify-end">
-      <button class="bg-red m-2 p-2 rounded-second" @click="router.push('/user')">Cancel</button>
-      <button class="bg-signup m-2 p-2 rounded-second" @click="saveInfo(inforUser)">Save</button>
     </div>
   </div>
 </template>
 <style></style>
 <script lang="ts" setup>
-import FormUser from '@/views/user/FormUser.vue'
+// import FormUser from '@/views/user/FormUser.vue'
 import type { User } from '@/types'
-import { ref, watch, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
 
-const route = useRoute()
+const props = defineProps<{
+  user: User
+}>()
 
-const router = useRouter()
+const emit = defineEmits<{
+  (event: 'cancel'): void
+  (event: 'save', payload: User): void
+}>()
 
-const inforUser = ref<User>()
+const saveAll = (formData: User) => {
+  emit('save', formData)
+}
 
-watchEffect(async () => {
-  // const res = await useApiUser.getUserById(route.params.id)
-  const res = await axios.get(`http://localhost:3000/users/${route.params.id}`)
-  if (res) {
-    inforUser.value = res.data
-  }
-})
-
-const saveInfo = async (infor: User) => {
-  try {
-    await axios.put(`http://localhost:3000/users/${route.params.id}`, infor).then(async () => {
-      alert('Edit Succesful !!!')
-      router.push('/user')
-    })
-  } catch (error) {
-    alert('Error updating user info')
-  }
+const onClose = () => {
+  emit('cancel')
 }
 </script>
+<style scoped>
+.modal {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+</style>

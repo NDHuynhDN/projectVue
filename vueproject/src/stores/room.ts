@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { Room } from '@/types'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref, type ComputedRef } from 'vue'
 
 export const useRoomStore = defineStore('room', () => {
   const rooms = ref<Room[]>([])
@@ -16,6 +16,10 @@ export const useRoomStore = defineStore('room', () => {
       console.log(error)
     }
   }
+  // console.log(rooms.value)
+
+  const getNameRoom = computed(() => rooms.value.map((room) => room.name))
+  console.log(getNameRoom.value)
 
   const updateRoomStatus = (updatedRoom: Room): any => {
     const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id)
@@ -45,5 +49,13 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  return { fetchRoom, fetchRoomById, rooms, room, updateRoomStatus, addRoom }
+  return {
+    fetchRoom,
+    fetchRoomById,
+    rooms,
+    room,
+    updateRoomStatus,
+    addRoom,
+    getNameRoom
+  }
 })

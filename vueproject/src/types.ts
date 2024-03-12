@@ -1,5 +1,5 @@
 export interface Room {
-  id: number | string | undefined
+  id: number | string 
   name: string
   count: number
   status: number
@@ -12,7 +12,7 @@ export interface User {
   address: string
   phone: string
   gender: string
-  room_id?: number 
+  room_id?: number
   password?: string
 }
 export interface AccountLogin {
@@ -34,3 +34,4 @@ export interface ErrorLogin {
   usernameError: string
   passwordError: string
 }
+export type RoomStatus = 'hasUser' | 'empty' | 'repair' | 'all' | ''

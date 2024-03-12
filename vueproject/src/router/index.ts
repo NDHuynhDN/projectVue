@@ -33,11 +33,6 @@ const routes: Array<RouteRecordRaw> = [
             path: '/room/AddRoom',
             name: 'addRoom',
             component: () => import('../views/room/AddRoom.vue')
-          },
-          {
-            path: '/room/:id',
-            name: 'detailRoom',
-            component: () => import('../views/room/DetailRoom.vue')
           }
         ]
       },
@@ -54,14 +49,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/user',
         name: 'user',
-        component: () => import('../views/user/User.vue'),
-        children: [
-          {
-            path: '/user/:id',
-            name: 'detailUser',
-            component: () => import('../views/user/DetailUser.vue')
-          }
-        ]
+        component: () => import('../views/user/User.vue')
       }
     ]
   },
