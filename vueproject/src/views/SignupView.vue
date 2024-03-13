@@ -69,7 +69,7 @@ const show = () => {
   showPassword.value = !showPassword.value
 }
 
-//
+// binding data
 const accountCreat = ref<AccountSignUp>({
   username: '',
   password: '',

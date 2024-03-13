@@ -94,7 +94,7 @@ onMounted(() => {
 })
 
 // Delete User
-const deleteUser = async (id: number, name: string) => {
+const deleteUser = async (id: number | string, name: string) => {
   const message = confirm(`Ban co muon xoa user ${name} nay khong?`)
   if (message == true) {
     await useApiUser.delDataUser(id).then(() => fetchAllUser())

@@ -22,7 +22,6 @@ export const useAuthStore = defineStore('user', () => {
       return res.data
     } catch (error) {
       console.log(error)
-      return undefined
     }
   }
 

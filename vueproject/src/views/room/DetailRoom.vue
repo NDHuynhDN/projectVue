@@ -108,23 +108,25 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useRoomStore } from '@/stores/room'
 import { useApiUserStore } from '@/stores/storeUser'
 import type { Room, User } from '@/types'
 import axios from 'axios'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref} from 'vue'
 
+// 
 const isAdding = ref<boolean>(false)
-
 const onAdd = () => {
   isAdding.value = !isAdding.value
 }
 const useApiUser = useApiUserStore()
-// const isDisable = ref<boolean>(false)
+
+// defineProps from parent component 
 const props = defineProps<{
   room: Room
   selectedRoomUsers: User[]
 }>()
+
+// binding data
 const infoNewUser = reactive<User>({
   id: '',
   name: '',
@@ -135,7 +137,7 @@ const infoNewUser = reactive<User>({
   gender: '',
   room_id: props.room.id
 })
-
+// defineProps to parent component
 const emit = defineEmits<{
   (event: 'cancel'): void
   (event: 'save', payload: User): void

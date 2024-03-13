@@ -8,7 +8,6 @@ export const useApiUserStore = defineStore('apiUser', () => {
     try {
       const response = await axios.get('http://localhost:3000/users')
       return response
-      // userData.value = response.data
     } catch (error) {
       window.alert('Error fetching data')
     }
@@ -26,8 +25,8 @@ export const useApiUserStore = defineStore('apiUser', () => {
     }
   }
   const totalUsers = computed(() => {
-    return userData.value.length;
-  });
+    return userData.value.length
+  })
 
   const delDataUser = async (userId: number | string): Promise<User | undefined> => {
     try {

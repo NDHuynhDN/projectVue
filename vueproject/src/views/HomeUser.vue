@@ -60,16 +60,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import Modal from '../components/Modal.vue'
 import Header from '@/components/Header.vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { useRoomStore } from '@/stores/room'
 
 const useAPIAccount = useAuthStore()
-
-const useApiRoom = useRoomStore()
 
 const router = useRouter()
 

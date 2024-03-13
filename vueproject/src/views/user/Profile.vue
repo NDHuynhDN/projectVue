@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div>
-        this is Profile page
+    <div class="text-center">
+        Coming soon !
     </div>
 </template>
 <style>

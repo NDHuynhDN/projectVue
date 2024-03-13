@@ -30,11 +30,11 @@
         </div>
         <DetailRoom
           v-if="selectedRoom && selectedRoom.id === room.id"
-          @cancel="onCancelDetail"
           :room="room"
           :selectedRoomUsers="selectedRoomUsers"
+          @cancel="onCancelDetail"
           @delete="deleteUser"
-          @save="addUser"
+          @save="saveAddUser"
         ></DetailRoom>
       </div>
     </div>
@@ -56,13 +56,11 @@ import Skeleton from '@/components/Skeleton.vue'
 import { useRoomStore } from '@/stores/room'
 import DetailRoom from './DetailRoom.vue'
 import type { Room, RoomStatus, User } from '@/types'
-
 const mang = Array.from({ length: 20 }, (_, index) => index + 1)
 
 // import type { Room } from '@/types'
 import { computed, onMounted, ref } from 'vue'
 import { useApiUserStore } from '@/stores/storeUser'
-import axios from 'axios'
 
 const useApiRoom = useRoomStore()
 const useApiUser = useApiUserStore()
@@ -110,7 +108,7 @@ const filteredPhongs = computed<Room[]>(() => {
     }
   })
 })
-
+// ------------------------------------------
 const selectedRoom = ref<Room | null>(null)
 const selectedRoomUsers = ref<User[]>([])
 
@@ -133,7 +131,7 @@ const deleteUser = (userId: number | string) => {
   }
 }
 
-const addUser = (newUser: User) => {
+const saveAddUser = (newUser: User) => {
   if (selectedRoomUsers.value) {
     newUser.room_id = selectedRoomUsers.value[0].room_id
     selectedRoomUsers.value.push(newUser)

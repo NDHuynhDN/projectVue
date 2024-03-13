@@ -25,6 +25,7 @@ import { onMounted } from 'vue'
 
 const useApiUser = useApiUserStore()
 const useApiRoom = useRoomStore()
+
 onMounted(async () => {
   await useApiUser.fetchDataUser2()
   await useApiRoom.fetchRoom()
