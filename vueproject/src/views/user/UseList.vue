@@ -54,7 +54,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import type { User } from '@/types'
-import { useRouter } from 'vue-router'
 import { useApiUserStore } from '@/stores/storeUser'
 import DetailUser from './DetailUser.vue'
 import axios from 'axios'

@@ -4,7 +4,7 @@
     <div class="mt-[20px] ml-[10px] flex flex-col gap-[20px]">
       <div
         class="w-full bg-signup p-2 rounded-primary flex items-center gap-2 cursor-pointer select-none"
-        @click="router.push('/home')"
+        @click="router.push('/homepage')"
       >
         <img class="w-[30px] h-[30px] ml-1" src="../assets/image/house-door-fill.svg" alt="" />
         Home page

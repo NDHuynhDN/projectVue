@@ -1,7 +1,7 @@
 import type { User } from '@/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export const useApiUserStore = defineStore('apiUser', () => {
   const fetchDataUser = async (): Promise<any> => {
@@ -25,8 +25,11 @@ export const useApiUserStore = defineStore('apiUser', () => {
       console.log('Error')
     }
   }
+  const totalUsers = computed(() => {
+    return userData.value.length;
+  });
 
-  const delDataUser = async (userId: number): Promise<User | undefined> => {
+  const delDataUser = async (userId: number | string): Promise<User | undefined> => {
     try {
       const res = await axios.delete(`http://localhost:3000/users/${userId}`)
       return res.data
@@ -57,6 +60,7 @@ export const useApiUserStore = defineStore('apiUser', () => {
     getUserById,
     delDataUser,
     addUser,
-    userData
+    userData,
+    totalUsers
   }
 })

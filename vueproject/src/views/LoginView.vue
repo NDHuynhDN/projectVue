@@ -84,7 +84,7 @@ const login = async () => {
   if (usernameInput.value !== '' && passwordInput.value !== '') {
     if (usernameInput.value == 'admin' && passwordInput.value == 'admin') {
       alert('Login succes, Welcome to admin page')
-      router.push('/home')
+      router.push('/homepage')
     } else {
       await useAPIAccount.fetchAccountUser(usernameInput.value, passwordInput.value)
       if (useAPIAccount.accountUser.length > 0) {

@@ -30,9 +30,11 @@
         </div>
         <DetailRoom
           v-if="selectedRoom && selectedRoom.id === room.id"
-          @cancel="onCancelDetail()"
+          @cancel="onCancelDetail"
           :room="room"
           :selectedRoomUsers="selectedRoomUsers"
+          @delete="deleteUser"
+          @save="addUser"
         ></DetailRoom>
       </div>
     </div>
@@ -71,7 +73,7 @@ onMounted(() => {
       await useApiRoom.fetchRoom()
       roomStatus.value = 'all'
       await useApiUser.fetchDataUser2()
-    }, 1000)
+    }, 2000)
   } catch (error) {
     console.log('Error', error)
   }
@@ -120,6 +122,23 @@ const onClickRoom = (roomId: number | string) => {
   selectedRoomUsers.value = useApiUser.userData.filter((user) => user.room_id === roomId)
 }
 
+const deleteUser = (userId: number | string) => {
+  const message = confirm('Xac nhan xoa')
+  if (message == true) {
+    if (selectedRoomUsers.value) {
+      selectedRoomUsers.value = selectedRoomUsers.value.filter((user) => user.id !== userId)
+    }
+  } else {
+    return
+  }
+}
+
+const addUser = (newUser: User) => {
+  if (selectedRoomUsers.value) {
+    newUser.room_id = selectedRoomUsers.value[0].room_id
+    selectedRoomUsers.value.push(newUser)
+  }
+}
 // ---------------------------------
 </script>
 

@@ -16,17 +16,11 @@ export const useRoomStore = defineStore('room', () => {
       console.log(error)
     }
   }
-  // console.log(rooms.value)
-
-  const getNameRoom = computed(() => rooms.value.map((room) => room.name))
-  console.log(getNameRoom.value)
 
   const updateRoomStatus = (updatedRoom: Room): any => {
     const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id)
     if (roomIndex !== -1) {
       rooms.value[roomIndex] = updatedRoom
-      console.log(rooms.value[roomIndex])
-      console.log(updatedRoom)
     }
   }
 
@@ -39,6 +33,9 @@ export const useRoomStore = defineStore('room', () => {
       console.log(error)
     }
   }
+  const totalRooms = computed(() => {
+    return rooms.value.length
+  })
 
   const addRoom = async (dataRoom: Room): Promise<Room | undefined> => {
     try {
@@ -56,6 +53,6 @@ export const useRoomStore = defineStore('room', () => {
     room,
     updateRoomStatus,
     addRoom,
-    getNameRoom
+    totalRooms
   }
 })

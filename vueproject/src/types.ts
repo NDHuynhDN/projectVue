@@ -5,14 +5,14 @@ export interface Room {
   status: number
 }
 export interface User {
-  id: number
+  id: number | string
   name: string
   username: string
   identify: string
   address: string
   phone: string
   gender: string
-  room_id?: number
+  room_id?: number | undefined | string
   password?: string
 }
 export interface AccountLogin {

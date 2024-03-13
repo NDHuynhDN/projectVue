@@ -20,9 +20,9 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: '/',
+        path: '/homepage',
         name: 'home',
-        component: () => import('../views/HomeAdmin.vue')
+        component: () => import('../views/Home.vue')
       },
       {
         path: '/room',

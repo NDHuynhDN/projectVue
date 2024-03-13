@@ -50,39 +50,41 @@
                   <td class="border px-3 py-1">{{ userInfo.address }}</td>
                   <td class="border px-3 py-1">{{ userInfo.phone }}</td>
                   <td>
-                    <button class="bg-login">Del</button>
+                    <button class="bg-login ml-2 rounded-second px-3" @click="delUser(userInfo.id)">
+                      Del
+                    </button>
                   </td>
                 </tr>
                 <tr v-if="isAdding" class="">
-                  <td>
+                  <td class="border py-1">
                     <input
                       class="text-whitereal text-center"
                       v-model="infoNewUser.id"
                       placeholder="ID"
                     />
                   </td>
-                  <td>
+                  <td class="border py-1">
                     <input
                       class="text-whitereal text-center"
                       v-model="infoNewUser.name"
                       placeholder="Name"
                     />
                   </td>
-                  <td>
+                  <td class="border py-1">
                     <input
                       class="text-whitereal text-center"
                       v-model="infoNewUser.gender"
                       placeholder="Gender"
                     />
                   </td>
-                  <td>
+                  <td class="border py-1">
                     <input
                       class="text-whitereal text-center"
                       v-model="infoNewUser.address"
                       placeholder="Address"
                     />
                   </td>
-                  <td>
+                  <td class="border py-1">
                     <input
                       class="text-whitereal text-center"
                       v-model="infoNewUser.phone"
@@ -98,7 +100,7 @@
             <button class="bg-login rounded-second px-3 py-1" @click="onAdd()">
               {{ isAdding ? 'NoAdd' : 'Add' }}
             </button>
-            <button class="bg-login rounded-second px-3 py-1" @click="saveInfo()">Save</button>
+            <button class="bg-login rounded-second px-3 py-1" @click="saveInfo()">Save add</button>
           </div>
         </div>
       </div>
@@ -106,45 +108,76 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useRoomStore } from '@/stores/room'
+import { useApiUserStore } from '@/stores/storeUser'
 import type { Room, User } from '@/types'
 import axios from 'axios'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 const isAdding = ref<boolean>(false)
 
 const onAdd = () => {
   isAdding.value = !isAdding.value
 }
-
+const useApiUser = useApiUserStore()
+// const isDisable = ref<boolean>(false)
+const props = defineProps<{
+  room: Room
+  selectedRoomUsers: User[]
+}>()
 const infoNewUser = reactive<User>({
-  id: 0,
+  id: '',
   name: '',
   username: '',
   identify: '',
   address: '',
   phone: '',
-  gender: ''
+  gender: '',
+  room_id: props.room.id
 })
-
-const props = defineProps<{
-  room: Room
-  selectedRoomUsers: User[]
-}>()
-
-const tempArrayUsers = reactive<User[]>([...props.selectedRoomUsers])
 
 const emit = defineEmits<{
   (event: 'cancel'): void
   (event: 'save', payload: User): void
+  (event: 'delete', payload: number | string): void
 }>()
 
 const onClose = () => {
   emit('cancel')
 }
 
-const saveInfo = () => {
-  tempArrayUsers.push({ ...infoNewUser })
-  isAdding.value = false
+const isEmpty = computed(() => {
+  return (
+    infoNewUser.id !== '' &&
+    infoNewUser.name !== '' &&
+    infoNewUser.gender !== '' &&
+    infoNewUser.address !== '' &&
+    infoNewUser.phone !== ''
+  )
+})
+
+const saveInfo = async () => {
+  try {
+    if (isEmpty.value) {
+      const res = await axios.post('http://localhost:3000/users', infoNewUser)
+      alert('Save successful')
+      emit('save', res.data)
+      isAdding.value = false
+    } else {
+      alert('Enter new infor user')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const delUser = async (id: number | string) => {
+  try {
+    await useApiUser.delDataUser(id)
+    emit('delete', id)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 <style scoped>
