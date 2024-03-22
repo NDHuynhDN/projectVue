@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
-    class="w-full bg-signup h-[70px] flex items-center justify-between px-7 text-whitereal shadow-md"
+    class="w-full bg-signup h-[70px] flex items-center justify-between px-7 text-whitereal shadow-xl"
   >
-    <h1 @click="router.push('/home')" class="cursor-pointer font-extrabold text-[50px] ml-4">
+    <h1 @click="router.push('/homepage')" class="cursor-pointer font-extrabold text-[50px] ml-4">
       Our House
     </h1>
     <div class="flex gap-6 items-center">
@@ -31,3 +31,4 @@ const useAPIAccount = useAuthStore()
 console.log(useAPIAccount.accountUser)
 </script>
 <style scoped></style>
+@/components/router

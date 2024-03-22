@@ -4,15 +4,19 @@ export default {
   theme: {
     colors: {
       login: '#fcbc8a',
-      signup: '#a4dbe6',
+      signup: '#6cb3c0',
       input: '#e5e5e5',
       primary: '#2f2f2f',
-      white: '#ececec',
-      whitereal: '#ffffff',
+      whitereal: '#fcfcfc',
       red: '#fa7070',
-      yellow: '#c4cf51',
-      green: '#54f542',
-      blue: '#33CCFF'
+      yellow: '#FFC045',
+      green: '#03C988',
+      blue: '#33CCFF',
+      black: '#000',
+      main: '#27374d',
+      sub: '#9DB2BF',
+      header: '#526D82',
+      white: '#DDE6ED'
     },
     borderRadius: {
       primary: '20px',

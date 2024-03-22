@@ -1,7 +1,7 @@
 export interface Room {
-  id: number | string 
-  name: string
-  count: number
+  id: number
+  maxCapacity: number
+  currentCapacity: number
   status: number
 }
 export interface User {

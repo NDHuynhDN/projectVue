@@ -5,7 +5,7 @@
     <RoomList></RoomList>
   </div>
   <button
-    class="w-[60px] h-[60px] rounded-[100px] bg-signup flex items-center justify-center absolute right-[30px] top-[200px] cursor-pointer shadow-lg"
+    class="w-[60px] h-[60px] rounded-[100px] bg-header hover:bg-sub flex items-center justify-center absolute right-[30px] top-[200px] cursor-pointer shadow-lg"
     @click="onToggle"
   >
     <img

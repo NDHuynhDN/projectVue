@@ -3,7 +3,9 @@
     <Header></Header>
     <div class="flex flex-col gap-2 items-center">
       <div class="bg-signup rounded-second w-[200px] mt-3 text-center">
-        <button @click="onClick">View Information</button>
+        <button @click="onClick" class="text-whitereal shadow-xl w-[250px] px-2 py-3">
+          View Information
+        </button>
         <Modal title="Information about user" v-if="isShowModal" @cancel="onClick">
           <template v-slot:body>
             <div v-if="useAPIAccount.accountUser.length > 0">
@@ -54,13 +56,15 @@
         </Modal>
       </div>
       <div class="bg-signup rounded-second w-[200px] text-center">
-        <button @click="router.push('/')">Log out</button>
+        <button @click="router.push('/')" class="text-whitereal shadow-xl w-[250px] px-2 py-3">
+          Log out
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Modal from '../components/Modal.vue'
 import Header from '@/components/Header.vue'
 import { useRouter } from 'vue-router'

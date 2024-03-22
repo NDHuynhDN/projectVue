@@ -4,38 +4,54 @@
       type="text"
       name=""
       v-model="inputSearch"
-      class="border bg-whitereal text-signup rounded-second w-[300px] pl-1 py-1"
+      class="shadow-2xl text-whitereal rounded-second w-[300px] pl-2 py-2 mb-3 border border-header"
       placeholder="Search name . . ."
     />
     <div class="w-full">
       <table class="mt-1 w-full rounded-primary">
         <thead class="">
-          <tr class="bg-login">
-            <th class="p-2 text-center font-bold capitalize">id</th>
-            <th class="p-2 text-center font-bold capitalize">name</th>
-            <th class="p-2 text-center font-bold capitalize">username</th>
-            <th class="p-2 text-center font-bold capitalize">identify</th>
-            <th class="p-2 text-center font-bold capitalize">address</th>
-            <th class="p-2 text-center font-bold capitalize">phone</th>
+          <tr class="text-whitereal">
+            <th class="p-2 text-center font-bold capitalize bg-header">id</th>
+            <th class="p-2 text-center font-bold capitalize bg-header">name</th>
+            <th class="p-2 text-center font-bold capitalize bg-header">username</th>
+            <th class="p-2 text-center font-bold capitalize bg-header">identify</th>
+            <th class="p-2 text-center font-bold capitalize bg-header">address</th>
+            <th class="p-2 text-center font-bold capitalize bg-header">phone</th>
           </tr>
         </thead>
         <tbody class="" v-if="searchResults.length > 0">
-          <tr v-for="(user, index) in searchResults" :key="index">
-            <td class="text-center mb-[]">{{ user.id }}</td>
-            <td class="text-center">{{ user.name }}</td>
-            <td class="text-center">{{ user.username }}</td>
-            <td class="text-center">{{ user.identify }}</td>
-            <td class="text-center">{{ user.address }}</td>
-            <td class="text-center">{{ user.phone }}</td>
+          <tr
+            v-for="(user, index) in searchResults"
+            :key="index"
+            class="h-[50px] hover:cursor-pointer"
+          >
+            <td class="text-center border-header text-whitereal border">
+              {{ user.id }}
+            </td>
+            <td class="text-center border-header text-whitereal border">
+              {{ user.name }}
+            </td>
+            <td class="text-center border-header text-whitereal border">
+              {{ user.username }}
+            </td>
+            <td class="text-center border-header text-whitereal border">
+              {{ user.identify }}
+            </td>
+            <td class="text-center border-header text-whitereal border">
+              {{ user.address }}
+            </td>
+            <td class="text-center border-header text-whitereal border">
+              {{ user.phone }}
+            </td>
             <td class="overflow-y-hidden">
               <button
-                class="rounded-primary bg-red py-1 px-3 mr-3"
+                class="rounded-primary ml-1 py-2 px-3 hover:bg-red mr-1"
                 @click="deleteUser(user.id, user.name)"
               >
-                Delete
+                <img src="../../assets/image/trash3.svg" alt="" class="w-[25px] h-[25px]" />
               </button>
-              <button class="rounded-primary bg-green py-1 px-3" @click="onClickUser(user)">
-                Detail
+              <button class="rounded-primary py-2 px-3 hover:bg-blue" @click="onClickUser(user)">
+                <img src="../../assets/image/eye-fill.svg" alt="" class="w-[25px] h-[25px]" />
               </button>
               <DetailUser
                 v-if="selectedUser && selectedUser.id === user.id"
@@ -127,23 +143,13 @@ watch(inputSearch, (newValue) => {
 })
 </script>
 <style>
-th:first-child,
-td:first-child {
+/* Góc trên bên phải */
+table tr:first-child th:first-child {
   border-top-left-radius: 10px;
 }
 
-th:last-child,
-td:last-child {
+/* Góc trên bên trái */
+table tr:first-child th:last-child {
   border-top-right-radius: 10px;
-}
-
-tr:last-child th:first-child,
-tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
-}
-
-tr:last-child th:last-child,
-tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
 }
 </style>

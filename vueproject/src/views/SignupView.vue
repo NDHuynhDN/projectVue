@@ -1,22 +1,22 @@
 <template>
   <div
-    class="w-[1000px] h-[550px] shadow-2xl mx-auto mt-[100px] xl:flex flex-row-reverse rounded-primary bg-white"
+    class="w-[1000px] h-[650px] shadow-2xl mx-auto mt-[100px] xl:flex flex-row-reverse rounded-primary bg-main"
   >
     <div class="h-full flex-1">
       <img src="../assets/image/q.jpg" class="h-full w-full rounded-primary shadow-md" alt="" />
     </div>
     <div class="flex-1">
       <div class="my-5 mx-3">
-        <h1 class="font-extrabold text-[60px] text-[#a4dbe6] mb-3">Create Account</h1>
+        <h1 class="font-extrabold text-[60px] text-[#6cb3c0] mb-1">Create Account</h1>
 
-        <form @submit.prevent="createAccount()">
-          <div class="bg-input rounded-primary p-3 w-full flex items-center gap-[12px]">
+        <form @submit.prevent="createAccount()" class="flex flex-col gap-3">
+          <div class="rounded-primary shadow-xl p-3 w-full flex items-center gap-[12px] text-white">
             <img src="../assets/image/person-fill.svg" class="w-[25px] h-[25px]" alt="" />
             <input type="text" placeholder="UserName . . ." v-model="accountCreat.username" />
           </div>
           <p class="text-red ml-3" v-if="emptyError">Please enter input</p>
           <!-- <br /> -->
-          <div class="bg-input rounded-primary p-3 w-full flex items-center gap-[6px]">
+          <div class="rounded-primary shadow-xl p-3 w-full flex items-center gap-[6px] text-white">
             <img src="../assets/image/key-fill.svg" class="w-[30px] h-[30px]" alt="" />
             <input
               :type="showPassword ? 'password' : 'text'"
@@ -27,27 +27,35 @@
               showPassword ? 'Show' : 'Hidden'
             }}</a>
           </div>
-          <p class="text-red ml-3" v-if="emptyError">Please enter input</p>
+          <p class="text-red ml-3 mt-0" v-if="emptyError">Please enter input</p>
 
-          <div class="bg-input rounded-primary p-3 w-full flex items-center gap-[6px]">
+          <div class="rounded-primary shadow-xl p-3 w-full flex items-center gap-[6px] text-white">
             <img src="../assets/image/key-fill.svg" class="w-[30px] h-[30px]" alt="" />
             <input
               :type="showPassword ? 'password' : 'text'"
               placeholder="Confirm Password . . ."
               v-model="password_confirm"
             />
-            <a class="ml-auto cursor-pointer" @click="show()">{{
+            <a class="ml-auto cursor-pointer text-whitereal" @click="show()">{{
               showPassword ? 'Show' : 'Hidden'
             }}</a>
           </div>
           <p class="text-red ml-3" v-if="emptyError">Please enter input</p>
           <p v-if="passwordError" class="text-red ml-3">Confirm password is incorrect</p>
-          <button class="btn-2 rounded-primary w-full" type="submit">Sign up</button>
+          <button
+            class="bg-header font-bold rounded-primary w-full px-3 py-2 text-white hover:text-main hover:bg-sub"
+            type="submit"
+          >
+            Sign up
+          </button>
         </form>
 
-        <p class="text-center mt-3">
-          Have an account ! <RouterLink to="/" class="text-signup">Login</RouterLink>
-        </p>
+        <div class="text-center mt-3">
+          <span class="text-white"> Have an account ! </span>
+          <RouterLink to="/" class="text-signup inline-block font-bold tracking-wide hover:scale-105 hover:ease-in"
+            >Login</RouterLink
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -111,4 +119,8 @@ const createAccount = () => {
 }
 </script>
 
-<style></style>
+<style scoped>
+input::placeholder {
+  @apply text-header;
+}
+</style>

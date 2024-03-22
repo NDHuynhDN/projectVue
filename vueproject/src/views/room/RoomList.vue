@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto rounded-primary p-2 text-white">
+  <div class="mx-auto rounded-primary p-2 text-whitereal">
     <div class="flex justify-around items-center">
       <label class="text-blue">
         <input type="radio" v-model="roomStatus" value="all" /> All Room
@@ -18,7 +18,7 @@
       <div
         v-for="(room, index) in filteredPhongs"
         :key="index"
-        class="m-1 h-[100px] flex justify-center items-center rounded-primary"
+        class="m-1 h-[100px] flex justify-center items-center rounded-primary shadow-lg"
         :style="{ backgroundColor: getColorByStatus(room.status) }"
       >
         <div
@@ -26,12 +26,15 @@
           @click="onClickRoom(room.id)"
         >
           <code class="font-bold"> Room:</code>
-          {{ room.name }} ({{ room.count }})
+          {{ room.id }} -
+          <img src="../../assets/image/person-fill-white.svg" alt="" class="w-[21px] h-[21px]" />
+          {{ room.currentCapacity }}
         </div>
         <DetailRoom
           v-if="selectedRoom && selectedRoom.id === room.id"
           :room="room"
           :selectedRoomUsers="selectedRoomUsers"
+          @updateStatus="handleUpdateStatus"
           @cancel="onCancelDetail"
           @delete="deleteUser"
           @save="saveAddUser"
@@ -71,7 +74,7 @@ onMounted(() => {
       await useApiRoom.fetchRoom()
       roomStatus.value = 'all'
       await useApiUser.fetchDataUser2()
-    }, 2000)
+    }, 500)
   } catch (error) {
     console.log('Error', error)
   }
@@ -80,11 +83,11 @@ onMounted(() => {
 //------------------------------
 const getColorByStatus = (status: number) => {
   if (status === 1) {
-    return 'red'
+    return '#ED2B2A'
   } else if (status === 2) {
-    return 'green'
+    return '#03C988'
   } else {
-    return 'gold'
+    return '#FFC045'
   }
 }
 //------------------------------------------
@@ -121,7 +124,7 @@ const onClickRoom = (roomId: number | string) => {
 }
 
 const deleteUser = (userId: number | string) => {
-  const message = confirm('Xac nhan xoa')
+  const message = confirm('Confirm deletion?')
   if (message == true) {
     if (selectedRoomUsers.value) {
       selectedRoomUsers.value = selectedRoomUsers.value.filter((user) => user.id !== userId)
@@ -131,6 +134,25 @@ const deleteUser = (userId: number | string) => {
   }
 }
 
+const handleUpdateStatus = async (payload: {
+  roomId: number
+  newStatus: number
+  currentCapacity: number
+  maxCapacity: number
+}) => {
+  try {
+    const { roomId, newStatus, currentCapacity, maxCapacity } = payload
+    const updateRoomData = {
+      id: roomId,
+      status: newStatus,
+      currentCapacity,
+      maxCapacity
+    }
+    await useApiRoom.updateRoom(roomId, updateRoomData)
+  } catch (error) {
+    console.error('Error updating room status:', error)
+  }
+}
 const saveAddUser = (newUser: User) => {
   if (selectedRoomUsers.value) {
     newUser.room_id = selectedRoomUsers.value[0].room_id

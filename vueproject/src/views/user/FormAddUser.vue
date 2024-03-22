@@ -1,16 +1,16 @@
 <template>
-  <form class="flex flex-col gap-3 w-[600px] mx-auto" @submit.prevent="saveInforAdd">
-    <h1 class="text-center text-[40px] font-bold">Add new user</h1>
+  <form class="flex flex-col gap-2 w-[600px] mx-auto" @submit.prevent="saveInforAdd">
+    <h1 class="text-center text-[40px] font-bold text-whitereal">Add new user</h1>
     <input
       type="text"
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-whitereal px-3 shadow-md py-3 rounded-second w-[600px]"
       placeholder="Enter name . . ."
       v-model="formData.name"
     />
     <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
     <input
       type="text"
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-whitereal px-3 shadow-md py-3 rounded-second w-[600px]"
       placeholder="Enter username . . ."
       v-model="formData.username"
     />
@@ -18,7 +18,7 @@
 
     <input
       type="text"
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-whitereal px-3 shadow-md py-3 rounded-second w-[600px]"
       placeholder="Enter gender (male or female) . . ."
       v-model="formData.gender"
     />
@@ -26,7 +26,7 @@
 
     <input
       type="text"
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-whitereal px-3 shadow-md py-3 rounded-second w-[600px]"
       placeholder="Enter address . . ."
       v-model="formData.address"
     />
@@ -34,7 +34,7 @@
 
     <input
       type="text"
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-whitereal px-3 shadow-md py-3 rounded-second w-[600px]"
       placeholder="Enter identify code . . . "
       v-model="formData.identify"
     />
@@ -42,28 +42,28 @@
 
     <input
       type="text"
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-whitereal px-3 shadow-md py-3 rounded-second w-[600px]"
       placeholder="Enter phone . . ."
       v-model="formData.phone"
     />
     <select
-      class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
+      class="text-header px-3 shadow-md py-3 rounded-second w-[600px]"
       v-model="formData.room_id"
     >
       <option value="" selected disabled hidden>Choose room</option>
       <option v-for="room in useApiRoom.rooms" :value="room.id" :key="room.id">
-        {{ room.name }}
+        {{ room.id }}
       </option>
     </select>
     <!-- <span v-if="inputEmptyError" class="text-red">{{ inputEmptyError }}</span> -->
 
-    <button class="m-2 px-3 py-2 bg-login rounded-second">Add new user</button>
+    <button class="w-full px-3 py-2 bg-header rounded-second text-whitereal">Add</button>
   </form>
 </template>
 <script lang="ts" setup>
 import { useRoomStore } from '@/stores/room'
 import { useApiUserStore } from '@/stores/storeUser'
-import type { User } from '@/types'
+import type { Room, User } from '@/types'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -101,21 +101,32 @@ const saveInforAdd = async () => {
     validateUsername()
     if (!inputUserNameError.value) {
       const roomId = formData.room_id
-      const room = await useApiRoom.fetchRoomById(roomId)
-      // update status & count 
-      if (room && room.status === 2) {
-        await useApiUser.addUser(formData)
-        room.count += 1
+      const room: Room = await useApiRoom.fetchRoomById(roomId)
+      // update status & count
+      if (room.currentCapacity >= room.maxCapacity) {
+        alert('Room is already full. Cannot and more users')
+        return
+      }
+      await useApiUser.addUser(formData)
+      if (room.status === 2) {
+        room.currentCapacity += 1
         room.status = 1
-        useApiRoom.updateRoomStatus(room)
+        await useApiRoom.updateRoomAddUser(roomId, {
+          currentCapacity: room.currentCapacity,
+          status: room.status,
+          maxCapacity: room.maxCapacity
+        })
         alert('Add successfully !!!')
         router.push('/user')
-      } else if (room && room.status === 3) {
-        alert('Dont add repair room')
+      } else if (room.status === 3) {
+        alert("Don't add repair room")
       } else {
-        await useApiUser.addUser(formData)
-        room.count += 1
-        useApiRoom.updateRoomStatus(room)
+        room.currentCapacity += 1
+        await useApiRoom.updateRoomAddUser(roomId, {
+          currentCapacity: room.currentCapacity,
+          status: room.status,
+          maxCapacity: room.maxCapacity
+        })
         alert('Add successfully !!!')
         router.push('/user')
       }

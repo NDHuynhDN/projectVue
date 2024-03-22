@@ -12,14 +12,14 @@
       type="text"
       class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
       placeholder="Enter name . . ."
-      v-model="formData.name"
+      v-model="formData.maxCapacity"
     />
     <!-- <label for="">Gender: </label> -->
     <input
       type="text"
       class="bg-white px-3 shadow-md py-2 rounded-second w-[600px]"
       placeholder="Enter number . . ."
-      v-model="formData.count"
+      v-model="formData.currentCapacity"
     />
     <input
       type="text"
@@ -39,8 +39,8 @@ const useApiRoom = useRoomStore()
 
 const formData = reactive<Room>({
   id: 601,
-  name: '601',
-  count: 0,
+  maxCapacity: 4,
+  currentCapacity: 0,
   status: 2
 })
 

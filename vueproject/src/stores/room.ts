@@ -17,13 +17,6 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
-  const updateRoomStatus = (updatedRoom: Room): any => {
-    const roomIndex = rooms.value.findIndex((room) => room.id === updatedRoom.id)
-    if (roomIndex !== -1) {
-      rooms.value[roomIndex] = updatedRoom
-    }
-  }
-
   const room = ref<Room[]>([])
   const fetchRoomById = async (id: number | string | string[] | undefined): Promise<any> => {
     try {
@@ -36,6 +29,15 @@ export const useRoomStore = defineStore('room', () => {
   const totalRooms = computed(() => {
     return rooms.value.length
   })
+  const totalRoomUse = computed(() => {
+    return rooms.value.filter((r) => r.status == 1).length
+  })
+  const totalRoomEmpty = computed(() => {
+    return rooms.value.filter((r) => r.status == 2).length
+  })
+  const totalRoomRepair = computed(() => {
+    return rooms.value.filter((r) => r.status == 3).length
+  })
 
   const addRoom = async (dataRoom: Room): Promise<Room | undefined> => {
     try {
@@ -46,13 +48,48 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
+  const updateRoom = async (roomId: number, updateRoomData: Partial<Room>) => {
+    try {
+      const res = await axios.put(`http://localhost:3000/rooms/${roomId}`, updateRoomData)
+      // Cập nhật trạng thái của phòng trong store
+      const roomIndex = rooms.value.findIndex((room) => room.id === roomId)
+      if (roomIndex !== -1) {
+        rooms.value[roomIndex] = res.data
+      }
+    } catch (error) {
+      console.error('Error updating room:', error)
+      throw error
+    }
+  }
+
+  const updateRoomAddUser = async (
+    roomId: number | string | undefined,
+    updateRoomData: Partial<Room>
+  ) => {
+    try {
+      const res = await axios.put(`http://localhost:3000/rooms/${roomId}`, updateRoomData)
+      // Cập nhật trạng thái của phòng trong store
+      const roomIndex = rooms.value.findIndex((room) => room.id === roomId)
+      if (roomIndex !== -1) {
+        rooms.value[roomIndex] = res.data
+      }
+    } catch (error) {
+      console.error('Error updating room:', error)
+      throw error
+    }
+  }
+
   return {
     fetchRoom,
     fetchRoomById,
     rooms,
     room,
-    updateRoomStatus,
+    updateRoom,
     addRoom,
-    totalRooms
+    totalRooms,
+    totalRoomUse,
+    totalRoomEmpty,
+    totalRoomRepair,
+    updateRoomAddUser
   }
 })
