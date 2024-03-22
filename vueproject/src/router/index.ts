@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/static',
-        name: 'home',
+        name: 'static',
         component: () => import('../views/Home.vue'),
         meta: { title: 'Static' }
       },

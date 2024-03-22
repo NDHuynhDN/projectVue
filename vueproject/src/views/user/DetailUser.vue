@@ -10,28 +10,59 @@
             </p>
             <form class="flex flex-col">
               <label class="font-bold text-whitereal" for="">Name: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.name" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.name"
+              />
               <label class="font-bold text-whitereal" for="">Username: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.username" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.username"
+              />
               <label class="font-bold text-whitereal" for="">Gender: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.gender" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.gender"
+              />
               <label class="font-bold text-whitereal" for="">Address: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.address" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.address"
+              />
               <label class="font-bold text-whitereal" for="">Identify: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.identify" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.identify"
+              />
               <label class="font-bold text-whitereal" for="">Phone: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.phone" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.phone"
+              />
               <label class="font-bold text-whitereal" for="">Room_id: </label>
-              <input type="text" class="text-sub border-b-2 border-header" v-model="props.user.room_id" />
+              <input
+                type="text"
+                class="text-sub border-b-2 border-header"
+                v-model="props.user.room_id"
+              />
             </form>
           </div>
         </div>
         <div class="flex justify-end">
-          <button class="bg-header hover:bg-red m-2 py-2 px-3 rounded-second" @click="onClose()">
+          <button
+            class="bg-header hover:bg-red m-2 py-2 px-3 rounded-second text-white"
+            @click="onClose()"
+          >
             Cancel
           </button>
           <button
-            class="bg-header hover:bg-blue m-2 py-2 px-3 rounded-second"
+            class="bg-header hover:bg-blue m-2 py-2 px-3 rounded-second text-white"
             @click="saveAll(user)"
           >
             Edit

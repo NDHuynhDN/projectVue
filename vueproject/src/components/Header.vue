@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
-    class="w-full bg-signup h-[70px] flex items-center justify-between px-7 text-whitereal shadow-xl"
+    class="w-full bg-main h-[70px] flex items-center justify-between px-7 text-whitereal shadow-xl"
   >
     <h1 @click="router.push('/homepage')" class="cursor-pointer font-extrabold text-[50px] ml-4">
       Our House
