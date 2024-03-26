@@ -22,7 +22,7 @@
           </code>
         </div>
       </li>
-      <button @click="clickShow()">
+      <button @click="clickShow()" class="hover:translate-y-1 transition-all">
         <img src="/src/assets/image/arrow-down-circle-fill.svg" alt="" class="w-[25px] h-[25px]" />
       </button>
       <div v-show="isShow">

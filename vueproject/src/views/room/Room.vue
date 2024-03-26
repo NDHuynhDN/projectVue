@@ -5,7 +5,7 @@
     <RoomList></RoomList>
   </div>
   <button
-    class="w-[60px] h-[60px] rounded-[100px] bg-header hover:bg-sub flex items-center justify-center absolute right-[30px] top-[200px] cursor-pointer shadow-lg"
+    class="w-[60px] h-[60px] rounded-[100px] bg-header hover:bg-sub flex items-center justify-center absolute right-[30px] top-[200px] cursor-pointer shadow-2xl"
     @click="onToggle"
   >
     <img
@@ -14,7 +14,7 @@
       class="rounded-circle w-[38px] h-[40px]"
     />
   </button>
-  <Modal v-if="isShow" @cancel="onToggle" title="Add new room">
+  <Modal v-if="isShow" @cancel="onToggle" title="Add new room" class="bg-main">
     <template v-slot:body>
       <AddRoom></AddRoom>
     </template>
@@ -32,4 +32,5 @@ const onToggle = () => {
   isShow.value = !isShow.value
 }
 </script>
-<style></style>
+<style scoped>
+</style>

@@ -36,6 +36,7 @@ export const useApiUserStore = defineStore('apiUser', () => {
       console.log('Error', error)
     }
   }
+
   const getUserById = async (id: number | string | string[]): Promise<User | undefined> => {
     try {
       const res = await axios.get(`http://localhost:3000/users/${id}`)

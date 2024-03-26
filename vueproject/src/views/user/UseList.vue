@@ -62,7 +62,7 @@
             </td>
           </tr>
         </tbody>
-        <p v-else class="">No result</p>
+        <p v-else class="text-whitereal text-[30px]">No result</p>
       </table>
     </div>
   </div>
@@ -70,9 +70,9 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import type { User } from '@/types'
-import { useApiUserStore } from '@/stores/storeUser'
 import DetailUser from './DetailUser.vue'
 import axios from 'axios'
+import { useApiUserStore } from '@/stores/storeUser'
 
 const useApiUser = useApiUserStore()
 // click modal
@@ -142,7 +142,7 @@ watch(inputSearch, (newValue) => {
   }
 })
 </script>
-<style>
+<style scoped>
 /* Góc trên bên phải */
 table tr:first-child th:first-child {
   border-top-left-radius: 10px;

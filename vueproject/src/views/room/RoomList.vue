@@ -46,7 +46,7 @@
       <div
         v-for="item in mang"
         :key="item"
-        class="m-1 h-[100px] flex justify-center items-center rounded-primary border shadow-sm"
+        class="m-1 h-[100px] flex justify-center items-center rounded-primary shadow-2xl"
       >
         <Skeleton></Skeleton>
       </div>
@@ -56,13 +56,13 @@
 
 <script lang="ts" setup>
 import Skeleton from '@/components/Skeleton.vue'
-import { useRoomStore } from '@/stores/room'
 import DetailRoom from './DetailRoom.vue'
 import type { Room, RoomStatus, User } from '@/types'
 const mang = Array.from({ length: 20 }, (_, index) => index + 1)
 
 // import type { Room } from '@/types'
 import { computed, onMounted, ref } from 'vue'
+import { useRoomStore } from '@/stores/room'
 import { useApiUserStore } from '@/stores/storeUser'
 
 const useApiRoom = useRoomStore()
@@ -119,16 +119,24 @@ const onCancelDetail = () => {
   selectedRoom.value = null
 }
 const onClickRoom = (roomId: number | string) => {
-  selectedRoom.value = useApiRoom.rooms.find((room) => room.id === roomId) || null
-  selectedRoomUsers.value = useApiUser.userData.filter((user) => user.room_id === roomId)
+  selectedRoom.value = useApiRoom.rooms.find((room: Room) => room.id === roomId) || null
+  selectedRoomUsers.value = useApiUser.userData.filter((user: User) => user.room_id === roomId)
 }
 
-const deleteUser = (userId: number | string) => {
+const deleteUser = async (userId: number | string) => {
   const message = confirm('Confirm deletion?')
   if (message == true) {
     if (selectedRoomUsers.value) {
       selectedRoomUsers.value = selectedRoomUsers.value.filter((user) => user.id !== userId)
     }
+    const roomId = selectedRoom.value?.id
+    const room: Room = await useApiRoom.fetchRoomById(roomId)
+    await useApiRoom.updateRoomAddUser(roomId, {
+      currentCapacity: room.currentCapacity - 1,
+      status: room.status,
+      maxCapacity: room.maxCapacity
+    })
+    await useApiRoom.fetchRoomById(roomId)
   } else {
     return
   }
@@ -153,10 +161,18 @@ const handleUpdateStatus = async (payload: {
     console.error('Error updating room status:', error)
   }
 }
-const saveAddUser = (newUser: User) => {
+const saveAddUser = async (newUser: User) => {
   if (selectedRoomUsers.value) {
-    newUser.room_id = selectedRoomUsers.value[0].room_id
+    // newUser.room_id = selectedRoomUsers.value[0].room_id
     selectedRoomUsers.value.push(newUser)
+
+    const roomId = selectedRoom.value?.id
+    const room: Room = await useApiRoom.fetchRoomById(roomId)
+    await useApiRoom.updateRoomAddUser(roomId, {
+      currentCapacity: room.currentCapacity + 1,
+      status: room.status,
+      maxCapacity: room.maxCapacity
+    })
   }
 }
 // ---------------------------------

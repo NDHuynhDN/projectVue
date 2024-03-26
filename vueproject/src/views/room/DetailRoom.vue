@@ -1,7 +1,7 @@
 <template>
   <div class="modal fade" @click.self="onClose()">
     <div class="modal-dialog">
-      <div class="modal-content h-[500px] bg-main">
+      <div class="modal-content min-h-[500px] bg-main">
         <div class="flex justify-between items-center">
           <div class="ml-3 font-thin text-whitereal">
             Room:
@@ -23,7 +23,11 @@
                 v-for="(status, index) in statusOptions"
                 :key="index"
                 :value="status.value"
-                class="p-3"
+                class="p-3 bg-main"
+                :disabled="
+                  (status.value === 1 && selectedStatus === 2) ||
+                  (status.value === 2 && selectedStatus === 1)
+                "
               >
                 <code>
                   {{ status.label }}
@@ -31,78 +35,121 @@
               </option>
             </select>
           </div>
-          <button class="rounded-second bg-header hover:bg-red px-4 py-2 m-4" @click="onClose()">Close</button>
+          <button class="rounded-second bg-header hover:bg-red px-4 py-2 m-4" @click="onClose()">
+            Close
+          </button>
         </div>
 
         <div class="">
-          <h2 class="text-center font-bold text-[40px] text-whitereal">User in Room</h2>
-          <div v-if="selectedRoomUsers.length > 0" class="">
-            <table class="w-[90%] ml-3 text-center mx-auto">
-              <thead class="font-bold text-whitereal">
-                <tr class="">
-                  <th class="border">Id</th>
-                  <th class="border">Name</th>
-                  <th class="border">Gender</th>
-                  <th class="border">Address</th>
-                  <th class="border">Phone</th>
-                </tr>
-              </thead>
-              <tbody class="text-whitereal">
-                <tr class="h-[50px]" v-for="(userInfo, index) in selectedRoomUsers" :key="index">
-                  <td class="border">{{ userInfo.id }}</td>
-                  <td class="border">{{ userInfo.name }}</td>
-                  <td class="border">{{ userInfo.gender }}</td>
-                  <td class="border">{{ userInfo.address }}</td>
-                  <td class="border">{{ userInfo.phone }}</td>
-                  <td>
-                    <button class="rounded-second" @click="delUser(userInfo.id)">
-                      <img src="../../assets/image/trash3.svg" alt="" class="w-[21px] h-[21px]" />
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="isAdding" class="">
-                  <td class="border py-1">
-                    <input class="text-whitereal ml-2" v-model="infoNewUser.id" placeholder="ID" />
-                  </td>
-                  <td class="border py-1">
-                    <input
-                      class="text-whitereal ml-2"
-                      v-model="infoNewUser.name"
-                      placeholder="Name"
-                    />
-                  </td>
-                  <td class="border py-1">
-                    <input
-                      class="text-whitereal ml-2"
-                      v-model="infoNewUser.gender"
-                      placeholder="Gender"
-                    />
-                  </td>
-                  <td class="border py-1">
-                    <input
-                      class="text-whitereal ml-2"
-                      v-model="infoNewUser.address"
-                      placeholder="Address"
-                    />
-                  </td>
-                  <td class="border py-1">
-                    <input
-                      class="text-whitereal ml-2"
-                      v-model="infoNewUser.phone"
-                      placeholder="Phone"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div v-if="room.status !== 2" class="">
+            <div v-if="selectedRoomUsers.length > 0">
+              <h2 class="text-center font-bold text-[40px] text-whitereal mb-2">
+                User in this room
+              </h2>
+              <table class="w-[90%] text-center mx-auto">
+                <thead class="font-bold text-whitereal bg-header">
+                  <tr class="">
+                    <th class="border border-header">Id</th>
+                    <th class="border border-header">Name</th>
+                    <th class="border border-header">Gender</th>
+                    <th class="border border-header">Address</th>
+                    <th class="border border-header">Phone</th>
+                  </tr>
+                </thead>
+                <tbody class="text-whitereal">
+                  <tr class="h-[50px]" v-for="(userInfo, index) in selectedRoomUsers" :key="index">
+                    <td class="border-header border">{{ userInfo.id }}</td>
+                    <td class="border-header border">{{ userInfo.name }}</td>
+                    <td class="border-header border">{{ userInfo.gender }}</td>
+                    <td class="border-header border">{{ userInfo.address }}</td>
+                    <td class="border-header border">{{ userInfo.phone }}</td>
+                    <td>
+                      <button class="rounded-second" @click="delUser(userInfo.id)">
+                        <img src="../../assets/image/trash3.svg" alt="" class="w-[21px] h-[21px]" />
+                      </button>
+                    </td>
+                  </tr>
+                  <tr v-if="isAdding" class="">
+                    <td class="border-header border py-1">
+                      <input
+                        class="text-whitereal text-center ml-2"
+                        v-model="infoNewUser.id"
+                        placeholder="ID"
+                      />
+                    </td>
+                    <td class="border-header border py-1">
+                      <input
+                        class="text-whitereal text-center ml-2"
+                        v-model="infoNewUser.name"
+                        placeholder="Name"
+                      />
+                    </td>
+                    <td class="border-header border py-1">
+                      <input
+                        class="text-whitereal text-center ml-2"
+                        v-model="infoNewUser.gender"
+                        placeholder="Gender"
+                      />
+                    </td>
+                    <td class="border-header border py-1">
+                      <input
+                        class="text-whitereal text-center ml-2"
+                        v-model="infoNewUser.address"
+                        placeholder="Address"
+                      />
+                    </td>
+                    <td class="border-header border py-1">
+                      <input
+                        class="text-whitereal text-center ml-2"
+                        v-model="infoNewUser.phone"
+                        placeholder="Phone"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="absolute bottom-[20px] right-[20px] flex gap-3">
+                <button class="bg-header hover:bg-red rounded-second px-4 py-2" @click="onAdd()">
+                  {{ isAdding ? 'No Add' : 'Add' }}
+                </button>
+                <button
+                  class="bg-header hover:bg-blue rounded-second px-4 py-2"
+                  @click="saveInfo()"
+                  :disabled="disableStatus"
+                  :class="{
+                    'cursor-not-allowed': disableStatus === true,
+                    'cursor-pointer': disableStatus === false
+                  }"
+                >
+                  Save add
+                </button>
+              </div>
+            </div>
+
+            <div
+              v-else
+              class="text-center p-4 mt-[70px] rounded-second w-[650px] mx-auto border-sub border border-dashed shadow-2xl"
+            >
+              <h2 class="text-center font-bold text-[40px] text-whitereal">
+                This room is repairing
+              </h2>
+
+              <h1>
+                <code class="font-bold text-[30px] tracking-wider"> Note: </code>
+                Don't add new user, please change to status "Empty"
+              </h1>
+            </div>
           </div>
-          <p v-else class="text-[30px] text-red italic text-center">Room empty</p>
-          <div class="float-right mr-4 flex gap-3 mt-[50px]">
-            <button class="bg-header hover:bg-red rounded-second px-4 py-2" @click="onAdd()">
-              {{ isAdding ? 'NoAdd' : 'Add' }}
-            </button>
-            <button class="bg-header hover:bg-blue rounded-second px-4 py-2" @click="saveInfo()">
-              Save add
+          <div
+            v-else
+            class="text-center p-4 mt-[70px] rounded-second w-[650px] mx-auto border-sub border border-dashed shadow-2xl"
+          >
+            <h2 class="text-center font-bold text-[40px] text-whitereal">This room is empty</h2>
+            <button
+              class="bg-header mt-3 px-3 py-2 rounded-second hover:scale-110 hover:bg-sub text-whitereal hover:text-main hover:font-semibold transition-all"
+              @click="router.push('/user/addUser')"
+            >
+              Add new user
             </button>
           </div>
         </div>
@@ -111,15 +158,25 @@
   </div>
 </template>
 <script lang="ts" setup>
+import router from '@/router'
 import { useApiUserStore } from '@/stores/storeUser'
 import type { Room, User } from '@/types'
 import axios from 'axios'
 import { computed, reactive, ref, defineEmits } from 'vue'
 
 //
+const disableStatus = ref<boolean>(true)
 const isAdding = ref<boolean>(false)
 const onAdd = () => {
-  isAdding.value = !isAdding.value
+  if (props.room.currentCapacity < props.room.maxCapacity) {
+    disableStatus.value = false
+    isAdding.value = !isAdding.value
+  } else {
+    // disableStatus.value = false
+    disableStatus.value = true
+    isAdding.value = false
+    alert('This room is full')
+  }
 }
 const useApiUser = useApiUserStore()
 
@@ -129,9 +186,14 @@ const props = defineProps<{
   selectedRoomUsers: User[]
 }>()
 
-const selectedStatus = ref<number>(props.room.status)
+const emit = defineEmits<{
+  (event: 'cancel'): void
+  (event: 'save', payload: User): void
+  (event: 'delete', payload: number | string): void
+  (event: 'updateStatus', payload: any): void
+}>()
 
-const maxUser = ref<number>(props.room.maxCapacity)
+const selectedStatus = ref<number>(props.room.status)
 
 const statusOptions = [
   { label: 'Using', value: 1 },
@@ -159,12 +221,6 @@ const infoNewUser = reactive<User>({
   room_id: props.room.id
 })
 // defineProps to parent component
-const emit = defineEmits<{
-  (event: 'cancel'): void
-  (event: 'save', payload: User): void
-  (event: 'delete', payload: number | string): void
-  (event: 'updateStatus', payload: any): void
-}>()
 
 const onClose = () => {
   emit('cancel')
@@ -186,6 +242,14 @@ const saveInfo = async () => {
       const res = await axios.post('http://localhost:3000/users', infoNewUser)
       alert('Save successful')
       emit('save', res.data)
+
+      infoNewUser.id = ''
+      infoNewUser.name = ''
+      infoNewUser.gender = ''
+      infoNewUser.address = ''
+      infoNewUser.phone = ''
+
+      disableStatus.value = true
       isAdding.value = false
     } else {
       alert('Enter new infor user')
@@ -210,6 +274,5 @@ const delUser = async (id: number | string) => {
 }
 .modal {
   background-color: rgba(247, 245, 248, 0.61);
-  
 }
 </style>
